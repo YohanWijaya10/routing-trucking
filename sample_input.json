@@ -1,0 +1,91 @@
+{
+  "depot": {
+    "name": "Gudang Surabaya",
+    "lat": -7.2575,
+    "lng": 112.7521
+  },
+  "vehicles": [
+    {
+      "id": "TRUCK-1",
+      "capacity_kg": 2000
+    },
+    {
+      "id": "TRUCK-2",
+      "capacity_kg": 2000
+    },
+    {
+      "id": "TRUCK-3",
+      "capacity_kg": 3000
+    },
+    {
+      "id": "TRUCK-4",
+      "capacity_kg": 3000
+    }
+  ],
+  "orders": [
+    {
+      "id": "CUST-001",
+      "name": "Sambikerep Mart",
+      "lat": -7.2888,
+      "lng": 112.6554,
+      "demand_kg": 450,
+      "service_minutes": 10
+    },
+    {
+      "id": "CUST-002",
+      "name": "Jambangan Plastik",
+      "lat": -7.3107,
+      "lng": 112.7195,
+      "demand_kg": 800,
+      "service_minutes": 15
+    },
+    {
+      "id": "CUST-003",
+      "name": "Wonokromo Toko Besar",
+      "lat": -7.3002,
+      "lng": 112.7381,
+      "demand_kg": 1200,
+      "service_minutes": 20
+    },
+    {
+      "id": "CUST-004",
+      "name": "Rungkut Sentra",
+      "lat": -7.3332,
+      "lng": 112.7604,
+      "demand_kg": 900,
+      "service_minutes": 15
+    },
+    {
+      "id": "CUST-005",
+      "name": "Lakarsantri Grosir",
+      "lat": -7.2745,
+      "lng": 112.6442,
+      "demand_kg": 700,
+      "service_minutes": 12
+    },
+    {
+      "id": "CUST-006",
+      "name": "Tandes Makmur",
+      "lat": -7.2474,
+      "lng": 112.6898,
+      "demand_kg": 650,
+      "service_minutes": 10
+    },
+    {
+      "id": "CUST-007",
+      "name": "Gunung Anyar Sentosa",
+      "lat": -7.3404,
+      "lng": 112.7891,
+      "demand_kg": 500,
+      "service_minutes": 12
+    },
+    {
+      "id": "CUST-008",
+      "name": "Benowo Jaya",
+      "lat": -7.2489,
+      "lng": 112.6222,
+      "demand_kg": 400,
+      "service_minutes": 10
+    }
+  ]
+}

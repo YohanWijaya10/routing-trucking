@@ -1,0 +1,163 @@
+{
+  "matrix_source": "estimated_haversine",
+  "depot": {
+    "name": "Gudang Surabaya",
+    "lat": -7.2575,
+    "lng": 112.7521
+  },
+  "summary": {
+    "orders_planned": 8,
+    "recommended_vehicle_count": 3,
+    "total_distance_km": 97.7,
+    "total_duration_minutes": 313.4,
+    "solver_used": "greedy"
+  },
+  "routes": [
+    {
+      "vehicle_id": "TRUCK-1",
+      "capacity_kg": 2000,
+      "load_kg": 2000,
+      "utilization_pct": 100.0,
+      "stop_count": 2,
+      "distance_km": 17.42,
+      "duration_minutes": 72.3,
+      "stop_ids": [
+        "CUST-003",
+        "CUST-002"
+      ],
+      "stop_names": [
+        "Wonokromo Toko Besar",
+        "Jambangan Plastik"
+      ],
+      "stops": [
+        {
+          "id": "CUST-003",
+          "name": "Wonokromo Toko Besar",
+          "lat": -7.3002,
+          "lng": 112.7381,
+          "demand_kg": 1200,
+          "service_minutes": 20
+        },
+        {
+          "id": "CUST-002",
+          "name": "Jambangan Plastik",
+          "lat": -7.3107,
+          "lng": 112.7195,
+          "demand_kg": 800,
+          "service_minutes": 15
+        }
+      ],
+      "path": [
+        "Gudang Surabaya",
+        "Wonokromo Toko Besar",
+        "Jambangan Plastik",
+        "Gudang Surabaya"
+      ]
+    },
+    {
+      "vehicle_id": "TRUCK-2",
+      "capacity_kg": 2000,
+      "load_kg": 1400,
+      "utilization_pct": 70.0,
+      "stop_count": 2,
+      "distance_km": 26.61,
+      "duration_minutes": 84.0,
+      "stop_ids": [
+        "CUST-004",
+        "CUST-007"
+      ],
+      "stop_names": [
+        "Rungkut Sentra",
+        "Gunung Anyar Sentosa"
+      ],
+      "stops": [
+        {
+          "id": "CUST-004",
+          "name": "Rungkut Sentra",
+          "lat": -7.3332,
+          "lng": 112.7604,
+          "demand_kg": 900,
+          "service_minutes": 15
+        },
+        {
+          "id": "CUST-007",
+          "name": "Gunung Anyar Sentosa",
+          "lat": -7.3404,
+          "lng": 112.7891,
+          "demand_kg": 500,
+          "service_minutes": 12
+        }
+      ],
+      "path": [
+        "Gudang Surabaya",
+        "Rungkut Sentra",
+        "Gunung Anyar Sentosa",
+        "Gudang Surabaya"
+      ]
+    },
+    {
+      "vehicle_id": "TRUCK-3",
+      "capacity_kg": 3000,
+      "load_kg": 2200,
+      "utilization_pct": 73.33,
+      "stop_count": 4,
+      "distance_km": 53.67,
+      "duration_minutes": 157.0,
+      "stop_ids": [
+        "CUST-005",
+        "CUST-006",
+        "CUST-001",
+        "CUST-008"
+      ],
+      "stop_names": [
+        "Lakarsantri Grosir",
+        "Tandes Makmur",
+        "Sambikerep Mart",
+        "Benowo Jaya"
+      ],
+      "stops": [
+        {
+          "id": "CUST-005",
+          "name": "Lakarsantri Grosir",
+          "lat": -7.2745,
+          "lng": 112.6442,
+          "demand_kg": 700,
+          "service_minutes": 12
+        },
+        {
+          "id": "CUST-006",
+          "name": "Tandes Makmur",
+          "lat": -7.2474,
+          "lng": 112.6898,
+          "demand_kg": 650,
+          "service_minutes": 10
+        },
+        {
+          "id": "CUST-001",
+          "name": "Sambikerep Mart",
+          "lat": -7.2888,
+          "lng": 112.6554,
+          "demand_kg": 450,
+          "service_minutes": 10
+        },
+        {
+          "id": "CUST-008",
+          "name": "Benowo Jaya",
+          "lat": -7.2489,
+          "lng": 112.6222,
+          "demand_kg": 400,
+          "service_minutes": 10
+        }
+      ],
+      "path": [
+        "Gudang Surabaya",
+        "Lakarsantri Grosir",
+        "Tandes Makmur",
+        "Sambikerep Mart",
+        "Benowo Jaya",
+        "Gudang Surabaya"
+      ]
+    }
+  ],
+  "text_summary": "Matrix source: estimated_haversine\nSolver used: greedy\nOrders planned: 8\nRecommended vehicles used: 3\nTotal distance: 97.7 km\nTotal duration: 313.4 minutes\n\nTRUCK-1: load 2000/2000 kg (100.0%), stops 2, distance 17.42 km, duration 72.3 min\n  Gudang Surabaya -> Wonokromo Toko Besar -> Jambangan Plastik -> Gudang Surabaya\nTRUCK-2: load 1400/2000 kg (70.0%), stops 2, distance 26.61 km, duration 84.0 min\n  Gudang Surabaya -> Rungkut Sentra -> Gunung Anyar Sentosa -> Gudang Surabaya\nTRUCK-3: load 2200/3000 kg (73.33%), stops 4, distance 53.67 km, duration 157.0 min\n  Gudang Surabaya -> Lakarsantri Grosir -> Tandes Makmur -> Sambikerep Mart -> Benowo Jaya -> Gudang Surabaya"
+}
