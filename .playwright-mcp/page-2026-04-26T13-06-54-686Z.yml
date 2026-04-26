@@ -1,0 +1,728 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: 🚛
+        - generic [ref=e10]:
+          - heading "Route Planner" [level=1] [ref=e11]
+          - paragraph [ref=e12]: Logistik Jawa Timur
+      - generic [ref=e13]:
+        - combobox [ref=e14]:
+          - option "Auto Solver" [selected]
+          - option "OR-Tools"
+          - option "Greedy"
+        - textbox "Kota..." [ref=e15]: surabaya
+        - spinbutton [ref=e16]: "100"
+        - button "🔄 Load Data" [ref=e17] [cursor=pointer]
+        - button "▶ Generate Rute" [ref=e18] [cursor=pointer]
+    - generic [ref=e19]:
+      - complementary [ref=e20]:
+        - generic [ref=e21]:
+          - button "📋 Toko (100)" [ref=e181] [cursor=pointer]
+          - button "🚛 Truck (4)" [ref=e23] [cursor=pointer]
+          - button "🗺 Rute" [ref=e24] [cursor=pointer]
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - generic [ref=e29]: 🔍
+              - textbox "Cari nama toko, kecamatan..." [ref=e30]
+            - generic [ref=e31]:
+              - combobox [ref=e32]:
+                - option "Semua Kota" [selected]
+              - combobox [ref=e33]:
+                - option "Semua Kecamatan" [selected]
+                - option "ASEMROWO"
+                - option "Asemrowo"
+                - option "BENOWO"
+                - option "BUBUTAN"
+                - option "Benowo"
+                - option "Bubutan"
+                - option "DUKUH PAKIS"
+                - option "GAYUNGAN"
+                - option "GUBENG"
+                - option "JAMBANGAN"
+                - option "KENJERAN"
+                - option "KREMBANGAN"
+                - option "Kecamatan Benowo"
+                - option "Kecamatan Bubutan"
+                - option "Kecamatan Karangpilang"
+                - option "Kecamatan Sambikerep"
+                - option "Kecamatan Sawahan"
+                - option "Krembangan"
+                - option "LAKARSANTRI"
+                - option "Lakarsantri"
+                - option "PABEAN CANTIAN"
+                - option "PAKAL"
+                - option "SAMBIKEREP"
+                - option "SAWAHAN"
+                - option "SEMAMPIR"
+                - option "SIMOKERTO"
+                - option "Sambikerep"
+                - option "Sawahan"
+                - option "TAMBAKSARI"
+                - option "TANDES"
+                - option "TEGALSARI"
+                - option "WONOCOLO"
+                - option "WONOKROMO"
+                - option "Wiyung"
+          - generic [ref=e1789]:
+            - generic [ref=e1790]:
+              - generic [ref=e1791]: 3 toko dipilih
+              - button "Batal" [ref=e1792] [cursor=pointer]
+            - generic [ref=e1793]:
+              - button "TRUCK-1" [ref=e1794] [cursor=pointer]
+              - button "TRUCK-2" [ref=e1795] [cursor=pointer]
+              - button "TRUCK-3" [ref=e1796] [cursor=pointer]
+              - button "TRUCK-4" [ref=e1797] [cursor=pointer]
+          - generic [ref=e34]:
+            - button "Pilih Semua" [ref=e35] [cursor=pointer]
+            - button "Bersihkan" [ref=e36] [cursor=pointer]
+          - generic [ref=e37]:
+            - generic [ref=e1999] [cursor=pointer]:
+              - generic [ref=e2001]: ✓
+              - generic [ref=e2002]:
+                - paragraph [ref=e2004]: WARUNG BAROKAH SELERA RASA
+                - paragraph [ref=e2005]: 📍 Kecamatan Bubutan | -
+                - generic [ref=e2007]: 📦 136 kg
+            - generic [ref=e2011] [cursor=pointer]:
+              - paragraph [ref=e2013]: Sate Warung Goyang
+              - paragraph [ref=e2014]: 📍 SEMAMPIR | -
+              - generic [ref=e2016]: 📦 60 kg
+            - generic [ref=e2020] [cursor=pointer]:
+              - paragraph [ref=e2022]: Sukses Sate Kenjeran
+              - paragraph [ref=e2023]: 📍 SIMOKERTO | -
+              - generic [ref=e2025]: 📦 60 kg
+            - generic [ref=e2029] [cursor=pointer]:
+              - paragraph [ref=e2031]: STAND AYAM BU NURYANI
+              - paragraph [ref=e2032]: 📍 Kecamatan Sawahan | -
+              - generic [ref=e2034]: 📦 67 kg
+            - generic [ref=e2038] [cursor=pointer]:
+              - paragraph [ref=e2040]: Dapur Clara
+              - paragraph [ref=e2041]: 📍 Sambikerep | -
+              - generic [ref=e2043]: 📦 61 kg
+            - generic [ref=e2047] [cursor=pointer]:
+              - paragraph [ref=e2049]: Toko Sumber Rejeki
+              - paragraph [ref=e2050]: 📍 Benowo | -
+              - generic [ref=e2052]: 📦 60 kg
+            - generic [ref=e2056] [cursor=pointer]:
+              - paragraph [ref=e2058]: Toko Sayur Bu Sumiati
+              - paragraph [ref=e2059]: 📍 WONOCOLO | -
+              - generic [ref=e2061]: 📦 60 kg
+            - generic [ref=e2063] [cursor=pointer]:
+              - generic [ref=e2065]: ✓
+              - generic [ref=e2066]:
+                - paragraph [ref=e2068]: TOKO SUMBER BAROKAH
+                - paragraph [ref=e2069]: 📍 Bubutan | -
+                - generic [ref=e2071]: 📦 60 kg
+            - generic [ref=e2075] [cursor=pointer]:
+              - paragraph [ref=e2077]: TOKO 4R BAROKAH
+              - paragraph [ref=e2078]: 📍 WONOKROMO | -
+              - generic [ref=e2080]: 📦 144 kg
+            - generic [ref=e2084] [cursor=pointer]:
+              - paragraph [ref=e2086]: RM.SARI MINANG
+              - paragraph [ref=e2087]: 📍 BENOWO | -
+              - generic [ref=e2089]: 📦 118 kg
+            - generic [ref=e2093] [cursor=pointer]:
+              - paragraph [ref=e2095]: Toko Barokah
+              - paragraph [ref=e2096]: 📍 KENJERAN | -
+              - generic [ref=e2098]: 📦 60 kg
+            - generic [ref=e2102] [cursor=pointer]:
+              - paragraph [ref=e2104]: Warkop Salaman
+              - paragraph [ref=e2105]: 📍 Sawahan | -
+              - generic [ref=e2107]: 📦 127 kg
+            - generic [ref=e2111] [cursor=pointer]:
+              - paragraph [ref=e2113]: Es Teh Buti
+              - paragraph [ref=e2114]: 📍 Sawahan | -
+              - generic [ref=e2116]: 📦 96 kg
+            - generic [ref=e2120] [cursor=pointer]:
+              - paragraph [ref=e2122]: Krupuk Pak Dhi
+              - paragraph [ref=e2123]: 📍 Bubutan | -
+              - generic [ref=e2125]: 📦 60 kg
+            - generic [ref=e2129] [cursor=pointer]:
+              - paragraph [ref=e2131]: Toko Safari Kedurus
+              - paragraph [ref=e2132]: 📍 Kecamatan Karangpilang | -
+              - generic [ref=e2134]: 📦 60 kg
+            - generic [ref=e2138] [cursor=pointer]:
+              - paragraph [ref=e2140]: Toko Husna
+              - paragraph [ref=e2141]: 📍 Sawahan | -
+              - generic [ref=e2143]: 📦 60 kg
+            - generic [ref=e2147] [cursor=pointer]:
+              - paragraph [ref=e2149]: PT Carnis
+              - paragraph [ref=e2150]: 📍 GUBENG | -
+              - generic [ref=e2152]: 📦 60 kg
+            - generic [ref=e2156] [cursor=pointer]:
+              - paragraph [ref=e2158]: STAND BUAH BAROKAH JAYA
+              - paragraph [ref=e2159]: 📍 Kecamatan Sawahan | -
+              - generic [ref=e2161]: 📦 60 kg
+            - generic [ref=e347] [cursor=pointer]:
+              - generic [ref=e348]:
+                - paragraph [ref=e349]: PISANG PAK JUN
+                - generic "Truck 2" [ref=e1583]
+              - paragraph [ref=e350]: 📍 Asemrowo | -
+              - generic [ref=e351]:
+                - generic [ref=e352]: 📦 111 kg
+                - generic [ref=e1584]: 🚛 TRUCK-2
+            - generic [ref=e2165] [cursor=pointer]:
+              - paragraph [ref=e2167]: Toko Ainun Pasar Sememi
+              - paragraph [ref=e2168]: 📍 Kecamatan Benowo | -
+              - generic [ref=e2170]: 📦 130 kg
+            - generic [ref=e2174] [cursor=pointer]:
+              - paragraph [ref=e2176]: Pakan Burung Pojokan
+              - paragraph [ref=e2177]: 📍 Sambikerep | -
+              - generic [ref=e2179]: 📦 60 kg
+            - generic [ref=e2183] [cursor=pointer]:
+              - paragraph [ref=e2185]: Toko.aneka.snack.psr.candi Lontar
+              - paragraph [ref=e2186]: 📍 TANDES | -
+              - generic [ref=e2188]: 📦 121 kg
+            - generic [ref=e2192] [cursor=pointer]:
+              - paragraph [ref=e2194]: TEMBAKAU JAGO RASA
+              - paragraph [ref=e2195]: 📍 Bubutan | -
+              - generic [ref=e2197]: 📦 60 kg
+            - generic [ref=e2201] [cursor=pointer]:
+              - paragraph [ref=e2203]: Toko Inda Jaya.
+              - paragraph [ref=e2204]: 📍 SAMBIKEREP | -
+              - generic [ref=e2206]: 📦 139 kg
+            - generic [ref=e401] [cursor=pointer]:
+              - generic [ref=e402]:
+                - paragraph [ref=e403]: Toko.berkat Anugerah Jaya.tembok.
+                - generic "Truck 2" [ref=e1585]
+              - paragraph [ref=e404]: 📍 ASEMROWO | -
+              - generic [ref=e405]:
+                - generic [ref=e406]: 📦 148 kg
+                - generic [ref=e1586]: 🚛 TRUCK-2
+            - generic [ref=e2210] [cursor=pointer]:
+              - paragraph [ref=e2212]: Arssa Cell
+              - paragraph [ref=e2213]: 📍 Benowo | -
+              - generic [ref=e2215]: 📦 118 kg
+            - generic [ref=e2219] [cursor=pointer]:
+              - paragraph [ref=e2221]: Warung Makan Mujur
+              - paragraph [ref=e2222]: 📍 BENOWO | -
+              - generic [ref=e2224]: 📦 94 kg
+            - generic [ref=e2228] [cursor=pointer]:
+              - paragraph [ref=e2230]: Depot Pak Sarip
+              - paragraph [ref=e2231]: 📍 BENOWO | -
+              - generic [ref=e2233]: 📦 60 kg
+            - generic [ref=e2237] [cursor=pointer]:
+              - paragraph [ref=e2239]: Toko Buah Artika Pasar Citra Land
+              - paragraph [ref=e2240]: 📍 Sambikerep | -
+              - generic [ref=e2242]: 📦 100 kg
+            - generic [ref=e2246] [cursor=pointer]:
+              - paragraph [ref=e2248]: Depot.mey - Mey.pasar Citra Land
+              - paragraph [ref=e2249]: 📍 SAMBIKEREP | -
+              - generic [ref=e2251]: 📦 127 kg
+            - generic [ref=e2255] [cursor=pointer]:
+              - paragraph [ref=e2257]: Toko Berkat 2 Kelontong Pasar Pegirian
+              - paragraph [ref=e2258]: 📍 SEMAMPIR | -
+              - generic [ref=e2260]: 📦 67 kg
+            - generic [ref=e2264] [cursor=pointer]:
+              - paragraph [ref=e2266]: PENTOL KOCAAK
+              - paragraph [ref=e2267]: 📍 WONOKROMO | -
+              - generic [ref=e2269]: 📦 60 kg
+            - generic [ref=e2273] [cursor=pointer]:
+              - paragraph [ref=e2275]: Bu Dayat Pasar Bulak Banteng
+              - paragraph [ref=e2276]: 📍 SEMAMPIR | -
+              - generic [ref=e2278]: 📦 60 kg
+            - generic [ref=e2282] [cursor=pointer]:
+              - paragraph [ref=e2284]: Buah Pak Pur
+              - paragraph [ref=e2285]: 📍 Bubutan | -
+              - generic [ref=e2287]: 📦 148 kg
+            - generic [ref=e2291] [cursor=pointer]:
+              - paragraph [ref=e2293]: WR.RAHAYU
+              - paragraph [ref=e2294]: 📍 Lakarsantri | -
+              - generic [ref=e2296]: 📦 96 kg
+            - generic [ref=e2300] [cursor=pointer]:
+              - paragraph [ref=e2302]: Toko Bawang Mas Udin
+              - paragraph [ref=e2303]: 📍 PABEAN CANTIAN | -
+              - generic [ref=e2305]: 📦 79 kg
+            - generic [ref=e2309] [cursor=pointer]:
+              - paragraph [ref=e2311]: Toko Klontong Barokah Dika
+              - paragraph [ref=e2312]: 📍 WONOKROMO | -
+              - generic [ref=e2314]: 📦 67 kg
+            - generic [ref=e2318] [cursor=pointer]:
+              - paragraph [ref=e2320]: Soto Pak Soleh
+              - paragraph [ref=e2321]: 📍 Bubutan | -
+              - generic [ref=e2323]: 📦 60 kg
+            - generic [ref=e2327] [cursor=pointer]:
+              - paragraph [ref=e2329]: SOTO AYAM PAK SOLEH
+              - paragraph [ref=e2330]: 📍 Bubutan | -
+              - generic [ref=e2332]: 📦 60 kg
+            - generic [ref=e2336] [cursor=pointer]:
+              - paragraph [ref=e2338]: TK Air Mancur
+              - paragraph [ref=e2339]: 📍 KREMBANGAN | -
+              - generic [ref=e2341]: 📦 79 kg
+            - generic [ref=e2345] [cursor=pointer]:
+              - paragraph [ref=e2347]: DAWET AYU
+              - paragraph [ref=e2348]: 📍 Bubutan | -
+              - generic [ref=e2350]: 📦 60 kg
+            - generic [ref=e2354] [cursor=pointer]:
+              - paragraph [ref=e2356]: Bu.sumika.psr.candi Lontar.
+              - paragraph [ref=e2357]: 📍 TANDES | -
+              - generic [ref=e2359]: 📦 60 kg
+            - generic [ref=e2363] [cursor=pointer]:
+              - paragraph [ref=e2365]: Pak Mul
+              - paragraph [ref=e2366]: 📍 LAKARSANTRI | -
+              - generic [ref=e2368]: 📦 87 kg
+            - generic [ref=e2372] [cursor=pointer]:
+              - paragraph [ref=e2374]: Tahu Campur.cak San.manukan Loka..
+              - paragraph [ref=e2375]: 📍 TANDES | -
+              - generic [ref=e2377]: 📦 60 kg
+            - generic [ref=e2381] [cursor=pointer]:
+              - paragraph [ref=e2383]: WARUNG BU YAH
+              - paragraph [ref=e2384]: 📍 Bubutan | -
+              - generic [ref=e2386]: 📦 82 kg
+            - generic [ref=e2390] [cursor=pointer]:
+              - paragraph [ref=e2392]: End User Warung Barokah
+              - paragraph [ref=e2393]: 📍 BUBUTAN | -
+              - generic [ref=e2395]: 📦 81 kg
+            - generic [ref=e2399] [cursor=pointer]:
+              - paragraph [ref=e2401]: Toko Bu Nia
+              - paragraph [ref=e2402]: 📍 Sawahan | -
+              - generic [ref=e2404]: 📦 130 kg
+            - generic [ref=e2408] [cursor=pointer]:
+              - paragraph [ref=e2410]: Istirahat Makan
+              - paragraph [ref=e2411]: 📍 Kecamatan Benowo | -
+              - generic [ref=e2413]: 📦 64 kg
+            - generic [ref=e2417] [cursor=pointer]:
+              - paragraph [ref=e2419]: WARUNG BU NINGSIH
+              - paragraph [ref=e2420]: 📍 Bubutan | -
+              - generic [ref=e2422]: 📦 60 kg
+            - generic [ref=e2426] [cursor=pointer]:
+              - paragraph [ref=e2428]: Warung Makan Mak E.jln Babatan Wiyung Samping Penyetan Si Kembar.
+              - paragraph [ref=e2429]: 📍 Lakarsantri | -
+              - generic [ref=e2431]: 📦 102 kg
+            - generic [ref=e2435] [cursor=pointer]:
+              - paragraph [ref=e2437]: Kampung Bubur Dua Putri.babatan Wyg.
+              - paragraph [ref=e2438]: 📍 Wiyung | -
+              - generic [ref=e2440]: 📦 117 kg
+            - generic [ref=e2444] [cursor=pointer]:
+              - paragraph [ref=e2446]: TK Laundry Pod
+              - paragraph [ref=e2447]: 📍 BUBUTAN | -
+              - generic [ref=e2449]: 📦 60 kg
+            - generic [ref=e2453] [cursor=pointer]:
+              - paragraph [ref=e2455]: WR.HIJAU PER 3 AN
+              - paragraph [ref=e2456]: 📍 Kecamatan Sambikerep | -
+              - generic [ref=e2458]: 📦 87 kg
+            - generic [ref=e2462] [cursor=pointer]:
+              - paragraph [ref=e2464]: CV Immanuel Book Store
+              - paragraph [ref=e2465]: 📍 TEGALSARI | -
+              - generic [ref=e2467]: 📦 60 kg
+            - generic [ref=e2471] [cursor=pointer]:
+              - paragraph [ref=e2473]: Es Teh Bu Har
+              - paragraph [ref=e2474]: 📍 WONOKROMO | -
+              - generic [ref=e2476]: 📦 120 kg
+            - generic [ref=e2480] [cursor=pointer]:
+              - paragraph [ref=e2482]: Batagor
+              - paragraph [ref=e2483]: 📍 Sawahan | -
+              - generic [ref=e2485]: 📦 70 kg
+            - generic [ref=e2489] [cursor=pointer]:
+              - paragraph [ref=e2491]: Toko Kelontong Amanah
+              - paragraph [ref=e2492]: 📍 WONOKROMO | -
+              - generic [ref=e2494]: 📦 135 kg
+            - generic [ref=e2498] [cursor=pointer]:
+              - paragraph [ref=e2500]: Soto Ayam Hambali
+              - paragraph [ref=e2501]: 📍 Krembangan | -
+              - generic [ref=e2503]: 📦 133 kg
+            - generic [ref=e2507] [cursor=pointer]:
+              - paragraph [ref=e2509]: Mimik Jeruk
+              - paragraph [ref=e2510]: 📍 WONOKROMO | -
+              - generic [ref=e2512]: 📦 84 kg
+            - generic [ref=e2516] [cursor=pointer]:
+              - paragraph [ref=e2518]: Lapak Bu Sri
+              - paragraph [ref=e2519]: 📍 Sambikerep | -
+              - generic [ref=e2521]: 📦 124 kg
+            - generic [ref=e2525] [cursor=pointer]:
+              - paragraph [ref=e2527]: Toko Bu Rukayah
+              - paragraph [ref=e2528]: 📍 Benowo | -
+              - generic [ref=e2530]: 📦 60 kg
+            - generic [ref=e2534] [cursor=pointer]:
+              - paragraph [ref=e2536]: Pasar Ikan Pabean Kepiting Mik Um
+              - paragraph [ref=e2537]: 📍 PABEAN CANTIAN | -
+              - generic [ref=e2539]: 📦 150 kg
+            - generic [ref=e2543] [cursor=pointer]:
+              - paragraph [ref=e2545]: Toko Berkah Jaya (kelontong)
+              - paragraph [ref=e2546]: 📍 BENOWO | -
+              - generic [ref=e2548]: 📦 60 kg
+            - generic [ref=e2552] [cursor=pointer]:
+              - paragraph [ref=e2554]: Mie Ayam Wonogiri
+              - paragraph [ref=e2555]: 📍 PAKAL | -
+              - generic [ref=e2557]: 📦 60 kg
+            - generic [ref=e2561] [cursor=pointer]:
+              - paragraph [ref=e2563]: Toko.sofya.
+              - paragraph [ref=e2564]: 📍 SAMBIKEREP | -
+              - generic [ref=e2566]: 📦 141 kg
+            - generic [ref=e2570] [cursor=pointer]:
+              - paragraph [ref=e2572]: Toko Madura Sumber Rejeki
+              - paragraph [ref=e2573]: 📍 PAKAL | -
+              - generic [ref=e2575]: 📦 60 kg
+            - generic [ref=e2579] [cursor=pointer]:
+              - paragraph [ref=e2581]: Buah Potong Mbk Fitri.kmpung Babatan Wiyung
+              - paragraph [ref=e2582]: 📍 Wiyung | -
+              - generic [ref=e2584]: 📦 70 kg
+            - generic [ref=e2588] [cursor=pointer]:
+              - paragraph [ref=e2590]: Batagor Bandung.unesa
+              - paragraph [ref=e2591]: 📍 Wiyung | -
+              - generic [ref=e2593]: 📦 60 kg
+            - generic [ref=e2597] [cursor=pointer]:
+              - paragraph [ref=e2599]: PT Maxone Hotel
+              - paragraph [ref=e2600]: 📍 SAWAHAN | -
+              - generic [ref=e2602]: 📦 60 kg
+            - generic [ref=e2606] [cursor=pointer]:
+              - paragraph [ref=e2608]: Gorengan Bu Ida Lebak
+              - paragraph [ref=e2609]: 📍 TAMBAKSARI | -
+              - generic [ref=e2611]: 📦 60 kg
+            - generic [ref=e2615] [cursor=pointer]:
+              - paragraph [ref=e2617]: Teh Jumbo Setro
+              - paragraph [ref=e2618]: 📍 TAMBAKSARI | -
+              - generic [ref=e2620]: 📦 87 kg
+            - generic [ref=e2624] [cursor=pointer]:
+              - paragraph [ref=e2626]: PT Ikan Bakar Keputih
+              - paragraph [ref=e2627]: 📍 GUBENG | -
+              - generic [ref=e2629]: 📦 67 kg
+            - generic [ref=e2633] [cursor=pointer]:
+              - paragraph [ref=e2635]: Mie Ayam Petemon 3
+              - paragraph [ref=e2636]: 📍 Sawahan | -
+              - generic [ref=e2638]: 📦 102 kg
+            - generic [ref=e2642] [cursor=pointer]:
+              - paragraph [ref=e2644]: Sayur Hj Raufah
+              - paragraph [ref=e2645]: 📍 Benowo | -
+              - generic [ref=e2647]: 📦 136 kg
+            - generic [ref=e2651] [cursor=pointer]:
+              - paragraph [ref=e2653]: SUMBER JAYA PLASTIK
+              - paragraph [ref=e2654]: 📍 Bubutan | -
+              - generic [ref=e2656]: 📦 84 kg
+            - generic [ref=e2660] [cursor=pointer]:
+              - paragraph [ref=e2662]: Semanggi Bu Cicik
+              - paragraph [ref=e2663]: 📍 Sambikerep | -
+              - generic [ref=e2665]: 📦 60 kg
+            - generic [ref=e2669] [cursor=pointer]:
+              - paragraph [ref=e2671]: Siti Ayam Pasar Kapasan
+              - paragraph [ref=e2672]: 📍 SEMAMPIR | -
+              - generic [ref=e2674]: 📦 85 kg
+            - generic [ref=e2678] [cursor=pointer]:
+              - paragraph [ref=e2680]: GORENGAN BU SITI
+              - paragraph [ref=e2681]: 📍 Kecamatan Bubutan | -
+              - generic [ref=e2683]: 📦 82 kg
+            - generic [ref=e2687] [cursor=pointer]:
+              - paragraph [ref=e2689]: Kios Es Dawet Kudus Cak Ipin Babatan Wiyung
+              - paragraph [ref=e2690]: 📍 Wiyung | -
+              - generic [ref=e2692]: 📦 60 kg
+            - generic [ref=e2696] [cursor=pointer]:
+              - paragraph [ref=e2698]: BUBUR AYAM MANG ADOEL
+              - paragraph [ref=e2699]: 📍 Bubutan | -
+              - generic [ref=e2701]: 📦 142 kg
+            - generic [ref=e2705] [cursor=pointer]:
+              - paragraph [ref=e2707]: Es Teh Jumbo Abah
+              - paragraph [ref=e2708]: 📍 Benowo | -
+              - generic [ref=e2710]: 📦 66 kg
+            - generic [ref=e2714] [cursor=pointer]:
+              - paragraph [ref=e2716]: TOKO BU INDAH
+              - paragraph [ref=e2717]: 📍 Bubutan | -
+              - generic [ref=e2719]: 📦 139 kg
+            - generic [ref=e2723] [cursor=pointer]:
+              - paragraph [ref=e2725]: PT PT Duta Karya Bersatu
+              - paragraph [ref=e2726]: 📍 WONOCOLO | -
+              - generic [ref=e2728]: 📦 60 kg
+            - generic [ref=e2732] [cursor=pointer]:
+              - paragraph [ref=e2734]: WARUNG HJ IKA
+              - paragraph [ref=e2735]: 📍 Bubutan | -
+              - generic [ref=e2737]: 📦 60 kg
+            - generic [ref=e2741] [cursor=pointer]:
+              - paragraph [ref=e2743]: Jus Buah Salad Buah
+              - paragraph [ref=e2744]: 📍 Sambikerep | -
+              - generic [ref=e2746]: 📦 60 kg
+            - generic [ref=e2750] [cursor=pointer]:
+              - paragraph [ref=e2752]: Soto Madura
+              - paragraph [ref=e2753]: 📍 Sawahan | -
+              - generic [ref=e2755]: 📦 60 kg
+            - generic [ref=e2759] [cursor=pointer]:
+              - paragraph [ref=e2761]: Ikan Bu Mar
+              - paragraph [ref=e2762]: 📍 Benowo | -
+              - generic [ref=e2764]: 📦 60 kg
+            - generic [ref=e2766] [cursor=pointer]:
+              - generic [ref=e2768]: ✓
+              - generic [ref=e2769]:
+                - paragraph [ref=e2771]: ES TEH JUMBO BU LESTARI
+                - paragraph [ref=e2772]: 📍 Bubutan | -
+                - generic [ref=e2774]: 📦 60 kg
+            - generic [ref=e2778] [cursor=pointer]:
+              - paragraph [ref=e2780]: Toko Klontong Mbk Inull.jogoloyoo.
+              - paragraph [ref=e2781]: 📍 DUKUH PAKIS | -
+              - generic [ref=e2783]: 📦 60 kg
+            - generic [ref=e2787] [cursor=pointer]:
+              - paragraph [ref=e2789]: Noo.telur Dani.manukan.
+              - paragraph [ref=e2790]: 📍 TANDES | -
+              - generic [ref=e2792]: 📦 60 kg
+            - generic [ref=e2796] [cursor=pointer]:
+              - paragraph [ref=e2798]: STAN Jajan Bu Saidah
+              - paragraph [ref=e2799]: 📍 Kecamatan Bubutan | -
+              - generic [ref=e2801]: 📦 60 kg
+            - generic [ref=e2805] [cursor=pointer]:
+              - paragraph [ref=e2807]: Toko Susilo
+              - paragraph [ref=e2808]: 📍 WONOKROMO | -
+              - generic [ref=e2810]: 📦 60 kg
+            - generic [ref=e2814] [cursor=pointer]:
+              - paragraph [ref=e2816]: Tb Cahaya Abimanyu
+              - paragraph [ref=e2817]: 📍 Bubutan | -
+              - generic [ref=e2819]: 📦 60 kg
+            - generic [ref=e2823] [cursor=pointer]:
+              - paragraph [ref=e2825]: KEDAI MIMO
+              - paragraph [ref=e2826]: 📍 BUBUTAN | -
+              - generic [ref=e2828]: 📦 60 kg
+            - generic [ref=e2832] [cursor=pointer]:
+              - paragraph [ref=e2834]: Waris Podosenneng
+              - paragraph [ref=e2835]: 📍 PABEAN CANTIAN | -
+              - generic [ref=e2837]: 📦 60 kg
+            - generic [ref=e2841] [cursor=pointer]:
+              - paragraph [ref=e2843]: Toko Rezky
+              - paragraph [ref=e2844]: 📍 Sawahan | -
+              - generic [ref=e2846]: 📦 60 kg
+            - generic [ref=e2850] [cursor=pointer]:
+              - paragraph [ref=e2852]: Stand Buah Anugrah Alam
+              - paragraph [ref=e2853]: 📍 SAMBIKEREP | -
+              - generic [ref=e2855]: 📦 60 kg
+            - generic [ref=e2859] [cursor=pointer]:
+              - paragraph [ref=e2861]: Warung Sederhana.babatan Wiyung.
+              - paragraph [ref=e2862]: 📍 Wiyung | -
+              - generic [ref=e2864]: 📦 60 kg
+            - generic [ref=e2868] [cursor=pointer]:
+              - paragraph [ref=e2870]: PT Rsia Cempaka Putih
+              - paragraph [ref=e2871]: 📍 JAMBANGAN | -
+              - generic [ref=e2873]: 📦 60 kg
+            - generic [ref=e2877] [cursor=pointer]:
+              - paragraph [ref=e2879]: Al Madura Mart Menanggal
+              - paragraph [ref=e2880]: 📍 GAYUNGAN | -
+              - generic [ref=e2882]: 📦 60 kg
+        - generic [ref=e111]:
+          - generic [ref=e112]: 100 Toko
+          - generic [ref=e1082]: "Total demand: 8200 kg / Kapasitas: 10000 kg"
+      - main [ref=e113]:
+        - generic [ref=e114]:
+          - generic:
+            - generic:
+              - button "🏭" [ref=e115] [cursor=pointer]:
+                - generic [ref=e117]: 🏭
+              - button "1" [ref=e1083] [cursor=pointer]:
+                - generic [ref=e2884]: "1"
+              - button "2" [ref=e1086] [cursor=pointer]:
+                - generic [ref=e2886]: "2"
+              - button "3" [ref=e1089] [cursor=pointer]:
+                - generic [ref=e2888]: "3"
+              - button "4" [ref=e1092] [cursor=pointer]:
+                - generic [ref=e2890]: "4"
+              - button "5" [ref=e1095] [cursor=pointer]:
+                - generic [ref=e2892]: "5"
+              - button "6" [ref=e1098] [cursor=pointer]:
+                - generic [ref=e2894]: "6"
+              - button "7" [ref=e1101] [cursor=pointer]:
+                - generic [ref=e2896]: "7"
+              - button "8" [ref=e1104] [cursor=pointer]:
+                - generic [ref=e2898]: "8"
+              - button "9" [ref=e1107] [cursor=pointer]:
+                - generic [ref=e2900]: "9"
+              - button "10" [ref=e1110] [cursor=pointer]:
+                - generic [ref=e2902]: "10"
+              - button "11" [ref=e1113] [cursor=pointer]:
+                - generic [ref=e2904]: "11"
+              - button "12" [ref=e1116] [cursor=pointer]:
+                - generic [ref=e2906]: "12"
+              - button "13" [ref=e1119] [cursor=pointer]:
+                - generic [ref=e2908]: "13"
+              - button "14" [ref=e1122] [cursor=pointer]:
+                - generic [ref=e2910]: "14"
+              - button "15" [ref=e1125] [cursor=pointer]:
+                - generic [ref=e2912]: "15"
+              - button "16" [ref=e1128] [cursor=pointer]:
+                - generic [ref=e2914]: "16"
+              - button "17" [ref=e1131] [cursor=pointer]:
+                - generic [ref=e2916]: "17"
+              - button "18" [ref=e1134] [cursor=pointer]:
+                - generic [ref=e2918]: "18"
+              - button "2" [ref=e1623] [cursor=pointer]:
+                - generic [ref=e2920]: "2"
+              - button "20" [ref=e1140] [cursor=pointer]:
+                - generic [ref=e2922]: "20"
+              - button "21" [ref=e1143] [cursor=pointer]:
+                - generic [ref=e2924]: "21"
+              - button "22" [ref=e1146] [cursor=pointer]:
+                - generic [ref=e2926]: "22"
+              - button "23" [ref=e1149] [cursor=pointer]:
+                - generic [ref=e2928]: "23"
+              - button "24" [ref=e1152] [cursor=pointer]:
+                - generic [ref=e2930]: "24"
+              - button "2" [ref=e1636] [cursor=pointer]:
+                - generic [ref=e2932]: "2"
+              - button "26" [ref=e1158] [cursor=pointer]:
+                - generic [ref=e2934]: "26"
+              - button "27" [ref=e1161] [cursor=pointer]:
+                - generic [ref=e2936]: "27"
+              - button "28" [ref=e1164] [cursor=pointer]:
+                - generic [ref=e2938]: "28"
+              - button "29" [ref=e1167] [cursor=pointer]:
+                - generic [ref=e2940]: "29"
+              - button "30" [ref=e1170] [cursor=pointer]:
+                - generic [ref=e2942]: "30"
+              - button "31" [ref=e1173] [cursor=pointer]:
+                - generic [ref=e2944]: "31"
+              - button "32" [ref=e1176] [cursor=pointer]:
+                - generic [ref=e2946]: "32"
+              - button "33" [ref=e1179] [cursor=pointer]:
+                - generic [ref=e2948]: "33"
+              - button "34" [ref=e1182] [cursor=pointer]:
+                - generic [ref=e2950]: "34"
+              - button "35" [ref=e1185] [cursor=pointer]:
+                - generic [ref=e2952]: "35"
+              - button "36" [ref=e1188] [cursor=pointer]:
+                - generic [ref=e2954]: "36"
+              - button "37" [ref=e1191] [cursor=pointer]:
+                - generic [ref=e2956]: "37"
+              - button "38" [ref=e1194] [cursor=pointer]:
+                - generic [ref=e2958]: "38"
+              - button "39" [ref=e1197] [cursor=pointer]:
+                - generic [ref=e2960]: "39"
+              - button "40" [ref=e1200] [cursor=pointer]:
+                - generic [ref=e2962]: "40"
+              - button "41" [ref=e1203] [cursor=pointer]:
+                - generic [ref=e2964]: "41"
+              - button "42" [ref=e1206] [cursor=pointer]:
+                - generic [ref=e2966]: "42"
+              - button "43" [ref=e1209] [cursor=pointer]:
+                - generic [ref=e2968]: "43"
+              - button "44" [ref=e1212] [cursor=pointer]:
+                - generic [ref=e2970]: "44"
+              - button "45" [ref=e1215] [cursor=pointer]:
+                - generic [ref=e2972]: "45"
+              - button "46" [ref=e1218] [cursor=pointer]:
+                - generic [ref=e2974]: "46"
+              - button "47" [ref=e1221] [cursor=pointer]:
+                - generic [ref=e2976]: "47"
+              - button "48" [ref=e1224] [cursor=pointer]:
+                - generic [ref=e2978]: "48"
+              - button "49" [ref=e1227] [cursor=pointer]:
+                - generic [ref=e2980]: "49"
+              - button "50" [ref=e1230] [cursor=pointer]:
+                - generic [ref=e2982]: "50"
+              - button "51" [ref=e1233] [cursor=pointer]:
+                - generic [ref=e2984]: "51"
+              - button "52" [ref=e1236] [cursor=pointer]:
+                - generic [ref=e2986]: "52"
+              - button "53" [ref=e1239] [cursor=pointer]:
+                - generic [ref=e2988]: "53"
+              - button "54" [ref=e1242] [cursor=pointer]:
+                - generic [ref=e2990]: "54"
+              - button "55" [ref=e1245] [cursor=pointer]:
+                - generic [ref=e2992]: "55"
+              - button "56" [ref=e1248] [cursor=pointer]:
+                - generic [ref=e2994]: "56"
+              - button "57" [ref=e1251] [cursor=pointer]:
+                - generic [ref=e2996]: "57"
+              - button "58" [ref=e1254] [cursor=pointer]:
+                - generic [ref=e2998]: "58"
+              - button "59" [ref=e1257] [cursor=pointer]:
+                - generic [ref=e3000]: "59"
+              - button "60" [ref=e1260] [cursor=pointer]:
+                - generic [ref=e3002]: "60"
+              - button "61" [ref=e1263] [cursor=pointer]:
+                - generic [ref=e3004]: "61"
+              - button "62" [ref=e1266] [cursor=pointer]:
+                - generic [ref=e3006]: "62"
+              - button "63" [ref=e1269] [cursor=pointer]:
+                - generic [ref=e3008]: "63"
+              - button "64" [ref=e1272] [cursor=pointer]:
+                - generic [ref=e3010]: "64"
+              - button "65" [ref=e1275] [cursor=pointer]:
+                - generic [ref=e3012]: "65"
+              - button "66" [ref=e1278] [cursor=pointer]:
+                - generic [ref=e3014]: "66"
+              - button "67" [ref=e1281] [cursor=pointer]:
+                - generic [ref=e3016]: "67"
+              - button "68" [ref=e1284] [cursor=pointer]:
+                - generic [ref=e3018]: "68"
+              - button "69" [ref=e1287] [cursor=pointer]:
+                - generic [ref=e3020]: "69"
+              - button "70" [ref=e1290] [cursor=pointer]:
+                - generic [ref=e3022]: "70"
+              - button "71" [ref=e1293] [cursor=pointer]:
+                - generic [ref=e3024]: "71"
+              - button "72" [ref=e1296] [cursor=pointer]:
+                - generic [ref=e3026]: "72"
+              - button "73" [ref=e1299] [cursor=pointer]:
+                - generic [ref=e3028]: "73"
+              - button "74" [ref=e1302] [cursor=pointer]:
+                - generic [ref=e3030]: "74"
+              - button "75" [ref=e1305] [cursor=pointer]:
+                - generic [ref=e3032]: "75"
+              - button "76" [ref=e1308] [cursor=pointer]:
+                - generic [ref=e3034]: "76"
+              - button "77" [ref=e1311] [cursor=pointer]:
+                - generic [ref=e3036]: "77"
+              - button "78" [ref=e1314] [cursor=pointer]:
+                - generic [ref=e3038]: "78"
+              - button "79" [ref=e1317] [cursor=pointer]:
+                - generic [ref=e3040]: "79"
+              - button "80" [ref=e1320] [cursor=pointer]:
+                - generic [ref=e3042]: "80"
+              - button "81" [ref=e1323] [cursor=pointer]:
+                - generic [ref=e3044]: "81"
+              - button "82" [ref=e1326] [cursor=pointer]:
+                - generic [ref=e3046]: "82"
+              - button "83" [ref=e1329] [cursor=pointer]:
+                - generic [ref=e3048]: "83"
+              - button "84" [ref=e1332] [cursor=pointer]:
+                - generic [ref=e3050]: "84"
+              - button "85" [ref=e1335] [cursor=pointer]:
+                - generic [ref=e3052]: "85"
+              - button "86" [ref=e1338] [cursor=pointer]:
+                - generic [ref=e3054]: "86"
+              - button "87" [ref=e1341] [cursor=pointer]:
+                - generic [ref=e3056]: "87"
+              - button "88" [ref=e1344] [cursor=pointer]:
+                - generic [ref=e3058]: "88"
+              - button "89" [ref=e1347] [cursor=pointer]:
+                - generic [ref=e3060]: "89"
+              - button "90" [ref=e1350] [cursor=pointer]:
+                - generic [ref=e3062]: "90"
+              - button "91" [ref=e1353] [cursor=pointer]:
+                - generic [ref=e3064]: "91"
+              - button "92" [ref=e1356] [cursor=pointer]:
+                - generic [ref=e3066]: "92"
+              - button "93" [ref=e1359] [cursor=pointer]:
+                - generic [ref=e3068]: "93"
+              - button "94" [ref=e1362] [cursor=pointer]:
+                - generic [ref=e3070]: "94"
+              - button "95" [ref=e1365] [cursor=pointer]:
+                - generic [ref=e3072]: "95"
+              - button "96" [ref=e1368] [cursor=pointer]:
+                - generic [ref=e3074]: "96"
+              - button "97" [ref=e1371] [cursor=pointer]:
+                - generic [ref=e3076]: "97"
+              - button "98" [ref=e1374] [cursor=pointer]:
+                - generic [ref=e3078]: "98"
+              - button "99" [ref=e1377] [cursor=pointer]:
+                - generic [ref=e3080]: "99"
+              - button "100" [ref=e1380] [cursor=pointer]:
+                - generic [ref=e3082]: "100"
+          - generic:
+            - generic [ref=e142]:
+              - button "Zoom in" [ref=e143] [cursor=pointer]: +
+              - button "Zoom out" [ref=e144] [cursor=pointer]: −
+            - generic [ref=e145]:
+              - link "Leaflet" [ref=e146] [cursor=pointer]:
+                - /url: https://leafletjs.com
+                - img [ref=e147]
+                - text: Leaflet
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=e151] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+        - generic [ref=e153]:
+          - paragraph [ref=e154]: 📍 Peta Customer
+          - paragraph [ref=e155]: 100 toko | 4 truck
+        - generic [ref=e156]:
+          - paragraph [ref=e157]: Truck
+          - generic [ref=e158]:
+            - generic [ref=e161]: TRUCK-1
+            - generic [ref=e164]: TRUCK-2
+            - generic [ref=e167]: TRUCK-3
+            - generic [ref=e170]: TRUCK-4
+  - button "Open Next.js Dev Tools" [ref=e176] [cursor=pointer]:
+    - img [ref=e177]
+  - alert [ref=e180]

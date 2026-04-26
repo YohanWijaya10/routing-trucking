@@ -1,68 +1,321 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Polyline } from "react-leaflet";
+import { useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet-draw/dist/leaflet.draw.css";
 
-const depotIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
+let leafletDrawLoaded = false;
+function loadLeafletDraw() {
+  if (leafletDrawLoaded) return Promise.resolve();
+  return import("leaflet-draw").then(() => {
+    leafletDrawLoaded = true;
+  });
+}
+
+const depotIcon = new L.DivIcon({
+  className: "custom-depot-marker",
+  html: `
+    <div style="
+      width: 36px; height: 36px; 
+      background: #1a73e8; 
+      border-radius: 50% 50% 50% 0; 
+      transform: rotate(-45deg); 
+      border: 3px solid white; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+    ">
+      <span style="transform: rotate(45deg); font-size: 14px;">🏭</span>
+    </div>
+  `,
+  iconSize: [36, 36],
+  iconAnchor: [18, 36],
+  popupAnchor: [0, -36],
 });
 
-export default function LeafletMap({ depot, routes, colorForGroup }) {
+// Vertex marker icon (colored dot)
+function createVertexIcon(color) {
+  return L.divIcon({
+    className: "vertex-marker",
+    html: `<div style="
+      width: 16px; height: 16px;
+      background: ${color};
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      cursor: move;
+    "></div>`,
+    iconSize: [16, 16],
+    iconAnchor: [8, 8],
+  });
+}
+
+// Midpoint marker icon (white dot with colored border)
+function createMidpointIcon(color) {
+  return L.divIcon({
+    className: "midpoint-marker",
+    html: `<div style="
+      width: 12px; height: 12px;
+      background: white;
+      border: 2px solid ${color};
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      cursor: crosshair;
+    "></div>`,
+    iconSize: [12, 12],
+    iconAnchor: [6, 6],
+  });
+}
+
+// Draw control for creating new areas
+function DrawControl({ onPolygonCreated, enabled }) {
+  const map = useMap();
+  const controlRef = useRef(null);
+  const handlerRef = useRef(null);
+
+  useEffect(() => {
+    if (!enabled) {
+      if (controlRef.current) {
+        map.removeControl(controlRef.current);
+        controlRef.current = null;
+      }
+      if (handlerRef.current) {
+        map.off(L.Draw.Event.CREATED, handlerRef.current);
+        handlerRef.current = null;
+      }
+      return;
+    }
+
+    loadLeafletDraw().then(() => {
+      if (!map || controlRef.current) return;
+
+      const drawnItems = new L.FeatureGroup();
+      map.addLayer(drawnItems);
+
+      const drawControl = new L.Control.Draw({
+        position: "topright",
+        draw: {
+          polygon: {
+            allowIntersection: false,
+            showArea: true,
+            drawError: { color: "#e74c3c", timeout: 1000 },
+            shapeOptions: { color: "#1a73e8", weight: 3, fillOpacity: 0.15 },
+          },
+          polyline: false,
+          rectangle: false,
+          circle: false,
+          circlemarker: false,
+          marker: false,
+        },
+        edit: false,
+      });
+      
+      map.addControl(drawControl);
+      controlRef.current = drawControl;
+
+      const handleCreated = (e) => {
+        const layer = e.layer;
+        drawnItems.addLayer(layer);
+        const latlngs = layer.getLatLngs()[0];
+        const polygon = latlngs.map((ll) => ({ lat: ll.lat, lng: ll.lng }));
+        if (onPolygonCreated) onPolygonCreated(polygon);
+        drawnItems.clearLayers();
+      };
+      
+      handlerRef.current = handleCreated;
+      map.on(L.Draw.Event.CREATED, handleCreated);
+
+      return () => {
+        if (handlerRef.current) {
+          map.off(L.Draw.Event.CREATED, handlerRef.current);
+          handlerRef.current = null;
+        }
+        if (controlRef.current) {
+          map.removeControl(controlRef.current);
+          controlRef.current = null;
+        }
+        map.removeLayer(drawnItems);
+      };
+    });
+  }, [map, enabled]);
+
+  return null;
+}
+
+// Map fitter for editing area
+function EditAreaFitter({ editingAreaId, polygons }) {
+  const map = useMap();
+  useEffect(() => {
+    if (editingAreaId && polygons.length > 0) {
+      const editingPoly = polygons.find((p) => p.id === editingAreaId);
+      if (editingPoly && editingPoly.polygon.length > 0) {
+        const latlngs = editingPoly.polygon.map((p) => [p.lat, p.lng]);
+        map.fitBounds(latlngs, { padding: [100, 100], maxZoom: 16 });
+      }
+    }
+  }, [map, editingAreaId, polygons]);
+  return null;
+}
+
+// Editable area polygons with draggable vertices
+function AreaPolygons({ polygons, onEdit, editingAreaId }) {
+  const map = useMap();
+  const layersRef = useRef({});
+
+  useEffect(() => {
+    // Clean up removed areas
+    const currentIds = polygons.map((p) => p.id).filter(Boolean);
+    Object.keys(layersRef.current).forEach((id) => {
+      if (!currentIds.includes(Number(id))) {
+        const layer = layersRef.current[id];
+        if (layer.polygon) map.removeLayer(layer.polygon);
+        if (layer.vertexMarkers) layer.vertexMarkers.forEach((m) => map.removeLayer(m));
+        if (layer.midpointMarkers) layer.midpointMarkers.forEach((m) => map.removeLayer(m));
+        delete layersRef.current[id];
+      }
+    });
+
+    polygons.forEach((poly) => {
+      if (!poly || !Array.isArray(poly.polygon) || poly.polygon.length < 3) return;
+      
+      const isEditing = editingAreaId === poly.id;
+      const existing = layersRef.current[poly.id];
+      
+      // Remove old layers
+      if (existing) {
+        if (existing.polygon) map.removeLayer(existing.polygon);
+        if (existing.vertexMarkers) existing.vertexMarkers.forEach((m) => map.removeLayer(m));
+        if (existing.midpointMarkers) existing.midpointMarkers.forEach((m) => map.removeLayer(m));
+      }
+
+      // Create polygon
+      const latlngs = poly.polygon.map((p) => [p.lat, p.lng]);
+      const polygonLayer = L.polygon(latlngs, {
+        color: poly.color || "#1a73e8",
+        weight: isEditing ? 3 : 2,
+        fillOpacity: isEditing ? 0.15 : 0.08,
+        dashArray: isEditing ? null : "5, 5",
+      }).addTo(map);
+
+      polygonLayer.bindPopup(`<b>${poly.name}</b><br>${poly.polygon.length} titik`);
+
+      const vertexMarkers = [];
+      const midpointMarkers = [];
+
+      if (isEditing) {
+        // Keep mutable state for current polygon during drag
+        const state = { polygon: poly.polygon.map((p) => ({ ...p })) };
+
+        // Function to update midpoints based on current state
+        const refreshMidpoints = () => {
+          // Remove old midpoints
+          midpointMarkers.forEach((m) => map.removeLayer(m));
+          midpointMarkers.length = 0;
+
+          const currentPoly = state.polygon;
+          for (let i = 0; i < currentPoly.length; i++) {
+            const j = (i + 1) % currentPoly.length;
+            const midLat = (currentPoly[i].lat + currentPoly[j].lat) / 2;
+            const midLng = (currentPoly[i].lng + currentPoly[j].lng) / 2;
+            
+            const midpoint = L.marker([midLat, midLng], {
+              icon: createMidpointIcon(poly.color || "#1a73e8"),
+              draggable: false,
+            }).addTo(map);
+
+            midpoint.on("click", () => {
+              const newPolygon = [...state.polygon];
+              newPolygon.splice(j, 0, { lat: midLat, lng: midLng });
+              if (onEdit) onEdit(poly.id, newPolygon);
+            });
+
+            midpointMarkers.push(midpoint);
+          }
+        };
+
+        // Create draggable vertex markers
+        poly.polygon.forEach((point, idx) => {
+          const marker = L.marker([point.lat, point.lng], {
+            icon: createVertexIcon(poly.color || "#1a73e8"),
+            draggable: true,
+          }).addTo(map);
+
+          marker.on("drag", (e) => {
+            const newLatLng = e.target.getLatLng();
+            state.polygon[idx] = { lat: newLatLng.lat, lng: newLatLng.lng };
+            
+            // Update polygon shape
+            const newLatLngs = state.polygon.map((p) => [p.lat, p.lng]);
+            polygonLayer.setLatLngs(newLatLngs);
+            
+            // Update midpoints
+            refreshMidpoints();
+          });
+
+          marker.on("dragend", () => {
+            if (onEdit) {
+              onEdit(poly.id, state.polygon.map((p) => ({ ...p })));
+            }
+          });
+
+          vertexMarkers.push(marker);
+        });
+
+        // Initial midpoints
+        refreshMidpoints();
+      }
+
+      layersRef.current[poly.id] = { 
+        polygon: polygonLayer, 
+        vertexMarkers, 
+        midpointMarkers 
+      };
+    });
+
+    return () => {
+      Object.values(layersRef.current).forEach((layer) => {
+        if (layer.polygon) map.removeLayer(layer.polygon);
+        if (layer.vertexMarkers) layer.vertexMarkers.forEach((m) => map.removeLayer(m));
+        if (layer.midpointMarkers) layer.midpointMarkers.forEach((m) => map.removeLayer(m));
+      });
+      layersRef.current = {};
+    };
+  }, [map, polygons, editingAreaId, onEdit]);
+
+  return null;
+}
+
+export default function LeafletMap({
+  depot,
+  onPolygonCreated,
+  areaPolygons = [],
+  drawEnabled = false,
+  editingAreaId = null,
+  onEditArea = null,
+}) {
   const center = depot?.lat && depot?.lng ? [depot.lat, depot.lng] : [-7.2575, 112.7521];
 
   return (
-    <MapContainer center={center} zoom={11} className="map-box">
+    <MapContainer center={center} zoom={12} style={{ width: "100%", height: "100%" }} scrollWheelZoom={true}>
       <TileLayer
-        attribution="&copy; OpenStreetMap"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {depot ? (
+
+      <DrawControl onPolygonCreated={onPolygonCreated} enabled={drawEnabled} />
+      <EditAreaFitter editingAreaId={editingAreaId} polygons={areaPolygons} />
+      <AreaPolygons polygons={areaPolygons} editingAreaId={editingAreaId} onEdit={onEditArea} />
+
+      {depot && (
         <Marker position={[depot.lat, depot.lng]} icon={depotIcon}>
           <Popup>
-            <strong>{depot.name}</strong>
-            <br />
-            Depot
+            <div style={{ minWidth: 160 }}>
+              <strong style={{ fontSize: 14, color: "#1a73e8" }}>🏭 {depot.name}</strong>
+            </div>
           </Popup>
         </Marker>
-      ) : null}
-      {routes.map((route, routeIndex) => {
-        const color = colorForGroup(route.area_label || String(routeIndex));
-        const routeGeometry =
-          Array.isArray(route.geometry) && route.geometry.length > 1 ? route.geometry : null;
-        const fallbackPoints = [
-          [depot.lat, depot.lng],
-          ...(route.stops || []).map((stop) => [stop.lat, stop.lng]),
-          [depot.lat, depot.lng],
-        ];
-        return (
-          <div key={`${route.vehicle_id}-${routeIndex}`}>
-            {(route.stops || []).map((stop, stopIndex) => (
-              <CircleMarker
-                key={`${route.vehicle_id}-${stop.id}-${stopIndex}`}
-                center={[stop.lat, stop.lng]}
-                radius={6}
-                pathOptions={{ color, fillColor: color, fillOpacity: 0.8, weight: 2 }}
-              >
-                <Popup>
-                  <strong>{route.vehicle_id}</strong>
-                  <br />#{stopIndex + 1} {stop.name}
-                  <br />
-                  {stop.demand_kg} kg
-                </Popup>
-              </CircleMarker>
-            ))}
-            <Polyline
-              positions={routeGeometry || fallbackPoints}
-              pathOptions={{ color, weight: 4, opacity: 0.82 }}
-            />
-          </div>
-        );
-      })}
+      )}
     </MapContainer>
   );
 }

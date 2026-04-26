@@ -1,0 +1,99 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Route Planner" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Mapping toko ke area & truck
+      - generic [ref=e10]:
+        - textbox "Kota..." [ref=e11]: surabaya
+        - spinbutton [ref=e12]: "100"
+        - button "🔄 Load Data" [ref=e13] [cursor=pointer]
+    - generic [ref=e14]:
+      - complementary [ref=e15]:
+        - generic [ref=e16]:
+          - heading "📍 Area & Truck" [level=3] [ref=e17]
+          - paragraph [ref=e18]: 0 toko loaded
+        - generic [ref=e19]:
+          - generic [ref=e20] [cursor=pointer]:
+            - generic [ref=e21]:
+              - generic [ref=e23]: Surabaya Barat
+              - generic [ref=e24]: 0 toko
+            - generic [ref=e25]:
+              - generic [ref=e26]: 🚛
+              - generic [ref=e27]: Isuzu Elf
+              - generic [ref=e28]: (2500 kg)
+          - generic [ref=e29] [cursor=pointer]:
+            - generic [ref=e30]:
+              - generic [ref=e32]: Surabaya Selatan
+              - generic [ref=e33]: 0 toko
+            - generic [ref=e34]:
+              - generic [ref=e35]: 🚛
+              - generic [ref=e36]: Mitsubishi Canter
+              - generic [ref=e37]: (3000 kg)
+          - generic [ref=e38] [cursor=pointer]:
+            - generic [ref=e39]:
+              - generic [ref=e41]: Surabaya Timur
+              - generic [ref=e42]: 0 toko
+            - generic [ref=e43]:
+              - generic [ref=e44]: 🚛
+              - generic [ref=e45]: Hino Dutro
+              - generic [ref=e46]: (3500 kg)
+          - generic [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]:
+              - generic [ref=e50]: Surabaya Pusat
+              - generic [ref=e51]: 0 toko
+            - generic [ref=e52]: ⚠️ Belum ada truck
+          - generic [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]:
+              - generic [ref=e56]: Surabaya Utara
+              - generic [ref=e57]: 0 toko
+            - generic [ref=e58]: ⚠️ Belum ada truck
+          - generic [ref=e59] [cursor=pointer]:
+            - generic [ref=e60]:
+              - generic [ref=e62]: Gresik
+              - generic [ref=e63]: 0 toko
+            - generic [ref=e64]: ⚠️ Belum ada truck
+          - generic [ref=e65] [cursor=pointer]:
+            - generic [ref=e66]:
+              - generic [ref=e68]: Sidoarjo
+              - generic [ref=e69]: 0 toko
+            - generic [ref=e70]: ⚠️ Belum ada truck
+          - generic [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]:
+              - generic [ref=e74]: Jombang
+              - generic [ref=e75]: 0 toko
+            - generic [ref=e76]: ⚠️ Belum ada truck
+          - generic [ref=e78] [cursor=pointer]:
+            - generic [ref=e80]: Belum Ter-assign
+            - generic [ref=e81]: 0 toko
+      - main [ref=e82]:
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - heading "Surabaya Barat" [level=2] [ref=e117]
+            - generic [ref=e118]: 0 toko
+          - generic [ref=e119]:
+            - generic [ref=e120]: 🚛 Isuzu Elf
+            - generic [ref=e121]: (2500 kg)
+        - paragraph [ref=e124]: Tidak ada toko di area ini
+      - generic [ref=e88]:
+        - heading "🗺 Peta" [level=3] [ref=e90]
+        - generic [ref=e92]:
+          - button "🏭" [ref=e93] [cursor=pointer]:
+            - generic [ref=e95]: 🏭
+          - generic:
+            - generic [ref=e96]:
+              - button "Zoom in" [ref=e97] [cursor=pointer]: +
+              - button "Zoom out" [ref=e98] [cursor=pointer]: −
+            - generic [ref=e99]:
+              - link "Leaflet" [ref=e100] [cursor=pointer]:
+                - /url: https://leafletjs.com
+                - img [ref=e101]
+                - text: Leaflet
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=e105] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e111] [cursor=pointer]:
+    - img [ref=e112]
+  - alert [ref=e115]

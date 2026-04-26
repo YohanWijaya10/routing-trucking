@@ -1,0 +1,65 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Route Planner" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Surabaya — 10,201 toko
+      - button "← Ganti Kota" [ref=e216] [cursor=pointer]
+    - generic [ref=e10]:
+      - complementary [ref=e217]:
+        - heading "📍 Area" [level=3] [ref=e219]
+        - generic [ref=e220]:
+          - generic [ref=e222] [cursor=pointer]:
+            - generic [ref=e224]:
+              - generic [ref=e225]: Surabaya Barat
+              - generic [ref=e226]: 2953 toko
+            - generic [ref=e227]: ⚠️
+          - generic [ref=e229] [cursor=pointer]:
+            - generic [ref=e231]:
+              - generic [ref=e232]: Surabaya Selatan
+              - generic [ref=e233]: 1703 toko
+            - generic [ref=e234]: ⚠️
+          - generic [ref=e236] [cursor=pointer]:
+            - generic [ref=e238]:
+              - generic [ref=e239]: Surabaya Timur
+              - generic [ref=e240]: 740 toko
+            - generic [ref=e241]: ⚠️
+          - generic [ref=e243] [cursor=pointer]:
+            - generic [ref=e245]:
+              - generic [ref=e246]: Surabaya Pusat
+              - generic [ref=e247]: 3197 toko
+            - generic [ref=e248]: ⚠️
+          - generic [ref=e250] [cursor=pointer]:
+            - generic [ref=e252]:
+              - generic [ref=e253]: Surabaya Utara
+              - generic [ref=e254]: 655 toko
+            - generic [ref=e255]: ⚠️
+          - generic [ref=e259] [cursor=pointer]:
+            - generic [ref=e260]: Belum Ter-assign
+            - generic [ref=e261]: 953 toko
+      - main [ref=e262]:
+        - generic [ref=e264]:
+          - generic [ref=e265]: 🗺
+          - paragraph [ref=e266]: Pilih area di sidebar untuk melihat toko
+      - generic [ref=e267]:
+        - heading "🗺 Peta" [level=3] [ref=e269]
+        - generic [active] [ref=e271]:
+          - button "🏭" [ref=e272] [cursor=pointer]:
+            - generic [ref=e274]: 🏭
+          - generic:
+            - generic [ref=e275]:
+              - button "Zoom in" [ref=e276] [cursor=pointer]: +
+              - button "Zoom out" [ref=e277] [cursor=pointer]: −
+            - generic [ref=e278]:
+              - link "Leaflet" [ref=e279] [cursor=pointer]:
+                - /url: https://leafletjs.com
+                - img [ref=e280]
+                - text: Leaflet
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=e284] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e113] [cursor=pointer]:
+    - img [ref=e114]
+  - alert [ref=e117]

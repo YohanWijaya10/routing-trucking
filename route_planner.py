@@ -107,6 +107,8 @@ class Order:
     area_id: int = 0
     area_label: str = "Area 1"
     district_label: str = ""
+    district_override: str = ""
+    manual_group_label: str = ""
 
 
 @dataclass
@@ -193,6 +195,8 @@ def load_payload(payload: Dict[str, Any]) -> Tuple[Depot, List[Vehicle], List[Or
             area_id=int(row.get("area_id", 0)),
             area_label=row.get("area_label", "Area 1"),
             district_label=row.get("district_label") or row.get("district", ""),
+            district_override=row.get("district_override", ""),
+            manual_group_label=row.get("manual_group_label", ""),
         )
         for row in payload["orders"]
     ]
@@ -361,15 +365,27 @@ def assign_administrative_areas(
 
     for order in orders:
         matched_district = None
-        for boundary in boundaries:
-            if any(point_in_geometry(order.lng, order.lat, geometry) for geometry in boundary["geometries"]):
-                matched_district = boundary["district"]
-                break
+        if order.district_override:
+            matched_district = order.district_override.title()
+        else:
+            for boundary in boundaries:
+                if any(point_in_geometry(order.lng, order.lat, geometry) for geometry in boundary["geometries"]):
+                    matched_district = boundary["district"]
+                    break
         if matched_district is None and order.district_label:
             matched_district = order.district_label.title()
+        if matched_district is None and order.manual_group_label.strip():
+            matched_district = (
+                order.district_override.title()
+                or order.district_label.title()
+                or "Manual"
+            )
         if matched_district is None:
             continue
-        zone_label = normalized_map.get(matched_district, f"Group Z - {matched_district}")
+        zone_label = order.manual_group_label.strip() or normalized_map.get(
+            matched_district,
+            f"Group Z - {matched_district}",
+        )
         if zone_label not in zone_ids:
             zone_ids[zone_label] = next_area_id
             next_area_id += 1

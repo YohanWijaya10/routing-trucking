@@ -1,0 +1,98 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Route Planner" [level=1] [ref=e8]
+          - paragraph [ref=e9]: 10,168 toko aktif
+    - generic [ref=e10]:
+      - complementary [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: Kota
+          - combobox [ref=e14]:
+            - option "Surabaya" [selected]
+            - option "Gresik"
+            - option "Sidoarjo"
+            - option "Jombang"
+            - option "Mojokerto"
+            - option "Kediri"
+            - option "Malang"
+            - option "Blitar"
+            - option "Jember"
+            - option "Banyuwangi"
+            - option "Probolinggo"
+            - option "Pasuruan"
+            - option "Bangkalan"
+            - option "Sampang"
+            - option "Pamekasan"
+            - option "Sumenep"
+            - option "Bondowoso"
+            - option "Situbondo"
+            - option "Lumajang"
+            - option "Trenggalek"
+            - option "Tulungagung"
+            - option "Ponorogo"
+            - option "Magetan"
+            - option "Nganjuk"
+            - option "Madiun"
+            - option "Pacitan"
+            - option "Ngawi"
+            - option "Bojonegoro"
+            - option "Tuban"
+            - option "Lamongan"
+            - option "Batu"
+        - generic [ref=e15]:
+          - generic [ref=e16]: Buat Area Baru
+          - generic [ref=e17]:
+            - textbox "Nama area..." [ref=e18]
+            - button "✏️ Drawing..." [active] [ref=e33] [cursor=pointer]
+          - paragraph [ref=e34]: Klik titik-titik di peta untuk buat polygon area
+        - generic [ref=e20]:
+          - heading "📍 Area & Toko (0 area)" [level=3] [ref=e22]
+          - generic [ref=e26] [cursor=pointer]:
+            - generic [ref=e28]:
+              - generic [ref=e29]: Belum Ter-assign
+              - generic [ref=e30]: 10168 toko
+            - generic [ref=e31]: ▼
+      - generic [ref=e35]:
+        - button "🏭" [ref=e36] [cursor=pointer]:
+          - generic [ref=e38]: 🏭
+        - generic:
+          - generic:
+            - generic [ref=e39]:
+              - button "Zoom in" [ref=e40] [cursor=pointer]: +
+              - button "Zoom out" [ref=e41] [cursor=pointer]: −
+            - generic [ref=e42]:
+              - link "Draw a polygon" [ref=e45] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=e46]: Draw a polygon
+              - generic [ref=e48]:
+                - link "Edit layers" [ref=e49]:
+                  - /url: "#"
+                  - generic [ref=e50]: Edit layers
+                - link "Delete layers" [ref=e51]:
+                  - /url: "#"
+                  - generic [ref=e52]: Delete layers
+            - generic [ref=e53]:
+              - link "Draw a polygon" [ref=e56] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=e57]: Draw a polygon
+              - generic [ref=e59]:
+                - link "Edit layers" [ref=e60]:
+                  - /url: "#"
+                  - generic [ref=e61]: Edit layers
+                - link "Delete layers" [ref=e62]:
+                  - /url: "#"
+                  - generic [ref=e63]: Delete layers
+          - generic [ref=e64]:
+            - link "Leaflet" [ref=e65] [cursor=pointer]:
+              - /url: https://leafletjs.com
+              - img [ref=e66]
+              - text: Leaflet
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e70] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e76] [cursor=pointer]:
+    - img [ref=e77]
+  - alert [ref=e80]

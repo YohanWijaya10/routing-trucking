@@ -1,0 +1,72 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]: 🗺
+      - generic [ref=e7]:
+        - heading "Route Planner" [level=1] [ref=e8]
+        - paragraph [ref=e9]: Mapping toko ke area & truck
+    - generic [ref=e11]: ⏳ Memuat data...
+  - generic [ref=e12]:
+    - complementary [ref=e13]:
+      - generic [ref=e14]:
+        - heading "📍 Area & Truck" [level=3] [ref=e15]
+        - paragraph [ref=e16]: 0 toko loaded
+      - generic [ref=e17]:
+        - generic [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]:
+            - generic [ref=e21]: Surabaya Barat
+            - generic [ref=e22]: 0 toko
+          - generic [ref=e23]:
+            - generic [ref=e24]: 🚛
+            - generic [ref=e25]: Isuzu Elf
+            - generic [ref=e26]: (2500 kg)
+        - generic [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]:
+            - generic [ref=e30]: Surabaya Selatan
+            - generic [ref=e31]: 0 toko
+          - generic [ref=e32]:
+            - generic [ref=e33]: 🚛
+            - generic [ref=e34]: Mitsubishi Canter
+            - generic [ref=e35]: (3000 kg)
+        - generic [ref=e36] [cursor=pointer]:
+          - generic [ref=e37]:
+            - generic [ref=e39]: Surabaya Timur
+            - generic [ref=e40]: 0 toko
+          - generic [ref=e41]:
+            - generic [ref=e42]: 🚛
+            - generic [ref=e43]: Hino Dutro
+            - generic [ref=e44]: (3500 kg)
+        - generic [ref=e45] [cursor=pointer]:
+          - generic [ref=e46]:
+            - generic [ref=e48]: Surabaya Pusat
+            - generic [ref=e49]: 0 toko
+          - generic [ref=e50]: ⚠️ Belum ada truck
+        - generic [ref=e51] [cursor=pointer]:
+          - generic [ref=e52]:
+            - generic [ref=e54]: Surabaya Utara
+            - generic [ref=e55]: 0 toko
+          - generic [ref=e56]: ⚠️ Belum ada truck
+        - generic [ref=e57] [cursor=pointer]:
+          - generic [ref=e58]:
+            - generic [ref=e60]: Gresik
+            - generic [ref=e61]: 0 toko
+          - generic [ref=e62]: ⚠️ Belum ada truck
+        - generic [ref=e63] [cursor=pointer]:
+          - generic [ref=e64]:
+            - generic [ref=e66]: Sidoarjo
+            - generic [ref=e67]: 0 toko
+          - generic [ref=e68]: ⚠️ Belum ada truck
+        - generic [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]:
+            - generic [ref=e72]: Jombang
+            - generic [ref=e73]: 0 toko
+          - generic [ref=e74]: ⚠️ Belum ada truck
+        - generic [ref=e76] [cursor=pointer]:
+          - generic [ref=e78]: Belum Ter-assign
+          - generic [ref=e79]: 0 toko
+    - main [ref=e80]:
+      - generic [ref=e82]:
+        - generic [ref=e83]: 🗺
+        - paragraph [ref=e84]: Pilih area di sidebar untuk melihat toko
+        - paragraph [ref=e85]: Klik "Load Data" untuk memuat toko dari database
+    - heading "🗺 Peta" [level=3] [ref=e88]

@@ -1,0 +1,295 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Route Planner" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Mapping toko ke area & truck
+      - generic [ref=e10]:
+        - textbox "Kota..." [ref=e11]: surabaya
+        - spinbutton [ref=e12]: "99"
+        - button "🔄 Load Data" [ref=e13] [cursor=pointer]
+    - generic [ref=e14]:
+      - complementary [ref=e15]:
+        - generic [ref=e16]:
+          - heading "📍 Area & Truck" [level=3] [ref=e17]
+          - paragraph [ref=e18]: 99 toko loaded
+        - generic [ref=e19]:
+          - generic [ref=e20] [cursor=pointer]:
+            - generic [ref=e21]:
+              - generic [ref=e23]: Surabaya Barat
+              - generic [ref=e24]: 26 toko
+            - generic [ref=e25]:
+              - generic [ref=e26]: 🚛
+              - generic [ref=e27]: Isuzu Elf
+              - generic [ref=e28]: (2500 kg)
+          - generic [ref=e29] [cursor=pointer]:
+            - generic [ref=e30]:
+              - generic [ref=e32]: Surabaya Selatan
+              - generic [ref=e33]: 14 toko
+            - generic [ref=e34]:
+              - generic [ref=e35]: 🚛
+              - generic [ref=e36]: Mitsubishi Canter
+              - generic [ref=e37]: (3000 kg)
+          - generic [ref=e38] [cursor=pointer]:
+            - generic [ref=e39]:
+              - generic [ref=e41]: Surabaya Timur
+              - generic [ref=e42]: 12 toko
+            - generic [ref=e43]:
+              - generic [ref=e44]: 🚛
+              - generic [ref=e45]: Hino Dutro
+              - generic [ref=e46]: (3500 kg)
+          - generic [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]:
+              - generic [ref=e50]: Surabaya Pusat
+              - generic [ref=e51]: 33 toko
+            - generic [ref=e52]: ⚠️ Belum ada truck
+          - generic [ref=e53] [cursor=pointer]:
+            - generic [ref=e54]:
+              - generic [ref=e56]: Surabaya Utara
+              - generic [ref=e57]: 7 toko
+            - generic [ref=e58]: ⚠️ Belum ada truck
+          - generic [ref=e59] [cursor=pointer]:
+            - generic [ref=e60]:
+              - generic [ref=e62]: Gresik
+              - generic [ref=e63]: 0 toko
+            - generic [ref=e64]: ⚠️ Belum ada truck
+          - generic [ref=e65] [cursor=pointer]:
+            - generic [ref=e66]:
+              - generic [ref=e68]: Sidoarjo
+              - generic [ref=e69]: 0 toko
+            - generic [ref=e70]: ⚠️ Belum ada truck
+          - generic [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]:
+              - generic [ref=e74]: Jombang
+              - generic [ref=e75]: 0 toko
+            - generic [ref=e76]: ⚠️ Belum ada truck
+          - generic [ref=e78] [cursor=pointer]:
+            - generic [ref=e80]: Belum Ter-assign
+            - generic [ref=e81]: 7 toko
+      - main [ref=e82]:
+        - generic [ref=e84]:
+          - generic [ref=e85]: 🗺
+          - paragraph [ref=e86]: Pilih area di sidebar untuk melihat toko
+          - paragraph [ref=e87]: Klik "Load Data" untuk memuat toko dari database
+      - generic [ref=e88]:
+        - heading "🗺 Peta" [level=3] [ref=e90]
+        - generic [ref=e92]:
+          - generic:
+            - generic:
+              - button "🏭" [ref=e93] [cursor=pointer]:
+                - generic [ref=e95]: 🏭
+              - button "1" [ref=e116] [cursor=pointer]:
+                - generic [ref=e5562]: "1"
+              - button "2" [ref=e119] [cursor=pointer]:
+                - generic [ref=e5564]: "2"
+              - button "3" [ref=e122] [cursor=pointer]:
+                - generic [ref=e5566]: "3"
+              - button "4" [ref=e125] [cursor=pointer]:
+                - generic [ref=e5568]: "4"
+              - button "5" [ref=e128] [cursor=pointer]:
+                - generic [ref=e5570]: "5"
+              - button "6" [ref=e131] [cursor=pointer]:
+                - generic [ref=e5572]: "6"
+              - button "7" [ref=e134] [cursor=pointer]:
+                - generic [ref=e5574]: "7"
+              - button "8" [ref=e137] [cursor=pointer]:
+                - generic [ref=e5576]: "8"
+              - button "9" [ref=e140] [cursor=pointer]:
+                - generic [ref=e5578]: "9"
+              - button "10" [ref=e143] [cursor=pointer]:
+                - generic [ref=e5580]: "10"
+              - button "11" [ref=e146] [cursor=pointer]:
+                - generic [ref=e5582]: "11"
+              - button "12" [ref=e149] [cursor=pointer]:
+                - generic [ref=e5584]: "12"
+              - button "13" [ref=e152] [cursor=pointer]:
+                - generic [ref=e5586]: "13"
+              - button "14" [ref=e155] [cursor=pointer]:
+                - generic [ref=e5588]: "14"
+              - button "15" [ref=e158] [cursor=pointer]:
+                - generic [ref=e5590]: "15"
+              - button "16" [ref=e161] [cursor=pointer]:
+                - generic [ref=e5592]: "16"
+              - button "17" [ref=e164] [cursor=pointer]:
+                - generic [ref=e5594]: "17"
+              - button "18" [ref=e167] [cursor=pointer]:
+                - generic [ref=e5596]: "18"
+              - button "19" [ref=e170] [cursor=pointer]:
+                - generic [ref=e5598]: "19"
+              - button "20" [ref=e173] [cursor=pointer]:
+                - generic [ref=e5600]: "20"
+              - button "21" [ref=e176] [cursor=pointer]:
+                - generic [ref=e5602]: "21"
+              - button "22" [ref=e179] [cursor=pointer]:
+                - generic [ref=e5604]: "22"
+              - button "23" [ref=e182] [cursor=pointer]:
+                - generic [ref=e5606]: "23"
+              - button "24" [ref=e185] [cursor=pointer]:
+                - generic [ref=e5608]: "24"
+              - button "25" [ref=e188] [cursor=pointer]:
+                - generic [ref=e5610]: "25"
+              - button "26" [ref=e191] [cursor=pointer]:
+                - generic [ref=e5612]: "26"
+              - button "27" [ref=e194] [cursor=pointer]:
+                - generic [ref=e5614]: "27"
+              - button "28" [ref=e197] [cursor=pointer]:
+                - generic [ref=e5616]: "28"
+              - button "29" [ref=e200] [cursor=pointer]:
+                - generic [ref=e5618]: "29"
+              - button "30" [ref=e203] [cursor=pointer]:
+                - generic [ref=e5620]: "30"
+              - button "31" [ref=e206] [cursor=pointer]:
+                - generic [ref=e5622]: "31"
+              - button "32" [ref=e209] [cursor=pointer]:
+                - generic [ref=e5624]: "32"
+              - button "33" [ref=e212] [cursor=pointer]:
+                - generic [ref=e5626]: "33"
+              - button "34" [ref=e215] [cursor=pointer]:
+                - generic [ref=e5628]: "34"
+              - button "35" [ref=e218] [cursor=pointer]:
+                - generic [ref=e5630]: "35"
+              - button "36" [ref=e221] [cursor=pointer]:
+                - generic [ref=e5632]: "36"
+              - button "37" [ref=e224] [cursor=pointer]:
+                - generic [ref=e5634]: "37"
+              - button "38" [ref=e227] [cursor=pointer]:
+                - generic [ref=e5636]: "38"
+              - button "39" [ref=e230] [cursor=pointer]:
+                - generic [ref=e5638]: "39"
+              - button "40" [ref=e233] [cursor=pointer]:
+                - generic [ref=e5640]: "40"
+              - button "41" [ref=e236] [cursor=pointer]:
+                - generic [ref=e5642]: "41"
+              - button "42" [ref=e239] [cursor=pointer]:
+                - generic [ref=e5644]: "42"
+              - button "43" [ref=e242] [cursor=pointer]:
+                - generic [ref=e5646]: "43"
+              - button "44" [ref=e245] [cursor=pointer]:
+                - generic [ref=e5648]: "44"
+              - button "45" [ref=e248] [cursor=pointer]:
+                - generic [ref=e5650]: "45"
+              - button "46" [ref=e251] [cursor=pointer]:
+                - generic [ref=e5652]: "46"
+              - button "47" [ref=e254] [cursor=pointer]:
+                - generic [ref=e5654]: "47"
+              - button "48" [ref=e257] [cursor=pointer]:
+                - generic [ref=e5656]: "48"
+              - button "49" [ref=e260] [cursor=pointer]:
+                - generic [ref=e5658]: "49"
+              - button "50" [ref=e263] [cursor=pointer]:
+                - generic [ref=e5660]: "50"
+              - button "51" [ref=e266] [cursor=pointer]:
+                - generic [ref=e5662]: "51"
+              - button "52" [ref=e269] [cursor=pointer]:
+                - generic [ref=e5664]: "52"
+              - button "53" [ref=e272] [cursor=pointer]:
+                - generic [ref=e5666]: "53"
+              - button "54" [ref=e275] [cursor=pointer]:
+                - generic [ref=e5668]: "54"
+              - button "55" [ref=e278] [cursor=pointer]:
+                - generic [ref=e5670]: "55"
+              - button "56" [ref=e281] [cursor=pointer]:
+                - generic [ref=e5672]: "56"
+              - button "57" [ref=e284] [cursor=pointer]:
+                - generic [ref=e5674]: "57"
+              - button "58" [ref=e287] [cursor=pointer]:
+                - generic [ref=e5676]: "58"
+              - button "59" [ref=e290] [cursor=pointer]:
+                - generic [ref=e5678]: "59"
+              - button "60" [ref=e293] [cursor=pointer]:
+                - generic [ref=e5680]: "60"
+              - button "61" [ref=e296] [cursor=pointer]:
+                - generic [ref=e5682]: "61"
+              - button "62" [ref=e299] [cursor=pointer]:
+                - generic [ref=e5684]: "62"
+              - button "63" [ref=e302] [cursor=pointer]:
+                - generic [ref=e5686]: "63"
+              - button "64" [ref=e305] [cursor=pointer]:
+                - generic [ref=e5688]: "64"
+              - button "65" [ref=e308] [cursor=pointer]:
+                - generic [ref=e5690]: "65"
+              - button "66" [ref=e311] [cursor=pointer]:
+                - generic [ref=e5692]: "66"
+              - button "67" [ref=e314] [cursor=pointer]:
+                - generic [ref=e5694]: "67"
+              - button "68" [ref=e317] [cursor=pointer]:
+                - generic [ref=e5696]: "68"
+              - button "69" [ref=e320] [cursor=pointer]:
+                - generic [ref=e5698]: "69"
+              - button "70" [ref=e323] [cursor=pointer]:
+                - generic [ref=e5700]: "70"
+              - button "71" [ref=e326] [cursor=pointer]:
+                - generic [ref=e5702]: "71"
+              - button "72" [ref=e329] [cursor=pointer]:
+                - generic [ref=e5704]: "72"
+              - button "73" [ref=e332] [cursor=pointer]:
+                - generic [ref=e5706]: "73"
+              - button "74" [ref=e335] [cursor=pointer]:
+                - generic [ref=e5708]: "74"
+              - button "75" [ref=e338] [cursor=pointer]:
+                - generic [ref=e5710]: "75"
+              - button "76" [ref=e341] [cursor=pointer]:
+                - generic [ref=e5712]: "76"
+              - button "77" [ref=e344] [cursor=pointer]:
+                - generic [ref=e5714]: "77"
+              - button "78" [ref=e347] [cursor=pointer]:
+                - generic [ref=e5716]: "78"
+              - button "79" [ref=e350] [cursor=pointer]:
+                - generic [ref=e5718]: "79"
+              - button "80" [ref=e353] [cursor=pointer]:
+                - generic [ref=e5720]: "80"
+              - button "81" [ref=e356] [cursor=pointer]:
+                - generic [ref=e5722]: "81"
+              - button "82" [ref=e359] [cursor=pointer]:
+                - generic [ref=e5724]: "82"
+              - button "83" [ref=e362] [cursor=pointer]:
+                - generic [ref=e5726]: "83"
+              - button "84" [ref=e365] [cursor=pointer]:
+                - generic [ref=e5728]: "84"
+              - button "85" [ref=e368] [cursor=pointer]:
+                - generic [ref=e5730]: "85"
+              - button "86" [ref=e371] [cursor=pointer]:
+                - generic [ref=e5732]: "86"
+              - button "87" [ref=e374] [cursor=pointer]:
+                - generic [ref=e5734]: "87"
+              - button "88" [ref=e377] [cursor=pointer]:
+                - generic [ref=e5736]: "88"
+              - button "89" [ref=e380] [cursor=pointer]:
+                - generic [ref=e5738]: "89"
+              - button "90" [ref=e383] [cursor=pointer]:
+                - generic [ref=e5740]: "90"
+              - button "91" [ref=e386] [cursor=pointer]:
+                - generic [ref=e5742]: "91"
+              - button "92" [ref=e389] [cursor=pointer]:
+                - generic [ref=e5744]: "92"
+              - button "93" [ref=e392] [cursor=pointer]:
+                - generic [ref=e5746]: "93"
+              - button "94" [ref=e395] [cursor=pointer]:
+                - generic [ref=e5748]: "94"
+              - button "95" [ref=e398] [cursor=pointer]:
+                - generic [ref=e5750]: "95"
+              - button "96" [ref=e401] [cursor=pointer]:
+                - generic [ref=e5752]: "96"
+              - button "97" [ref=e404] [cursor=pointer]:
+                - generic [ref=e5754]: "97"
+              - button "98" [ref=e407] [cursor=pointer]:
+                - generic [ref=e5756]: "98"
+              - button "99" [ref=e410] [cursor=pointer]:
+                - generic [ref=e5758]: "99"
+          - generic:
+            - generic [ref=e96]:
+              - button "Zoom in" [ref=e97] [cursor=pointer]: +
+              - button "Zoom out" [ref=e98] [cursor=pointer]: −
+            - generic [ref=e99]:
+              - link "Leaflet" [ref=e100] [cursor=pointer]:
+                - /url: https://leafletjs.com
+                - img [ref=e101]
+                - text: Leaflet
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=e105] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e111] [cursor=pointer]:
+    - img [ref=e112]
+  - alert [ref=e115]

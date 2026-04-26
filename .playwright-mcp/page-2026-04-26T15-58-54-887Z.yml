@@ -1,0 +1,100 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Route Planner" [level=1] [ref=e8]
+          - paragraph [ref=e9]: 10,168 toko aktif
+    - generic [ref=e10]:
+      - complementary [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: Kota
+          - combobox [ref=e14]:
+            - option "Surabaya" [selected]
+            - option "Gresik"
+            - option "Sidoarjo"
+            - option "Jombang"
+            - option "Mojokerto"
+            - option "Kediri"
+            - option "Malang"
+            - option "Blitar"
+            - option "Jember"
+            - option "Banyuwangi"
+            - option "Probolinggo"
+            - option "Pasuruan"
+            - option "Bangkalan"
+            - option "Sampang"
+            - option "Pamekasan"
+            - option "Sumenep"
+            - option "Bondowoso"
+            - option "Situbondo"
+            - option "Lumajang"
+            - option "Trenggalek"
+            - option "Tulungagung"
+            - option "Ponorogo"
+            - option "Magetan"
+            - option "Nganjuk"
+            - option "Madiun"
+            - option "Pacitan"
+            - option "Ngawi"
+            - option "Bojonegoro"
+            - option "Tuban"
+            - option "Lamongan"
+            - option "Batu"
+        - generic [ref=e15]:
+          - heading "📍 Area & Toko" [level=3] [ref=e17]
+          - generic [ref=e18]:
+            - generic [ref=e21] [cursor=pointer]:
+              - generic [ref=e23]:
+                - generic [ref=e24]: Surabaya Barat
+                - generic [ref=e25]: 2945 toko
+              - generic [ref=e26]: ▼
+              - generic [ref=e27]: ⚠️
+            - generic [ref=e30] [cursor=pointer]:
+              - generic [ref=e32]:
+                - generic [ref=e33]: Surabaya Selatan
+                - generic [ref=e34]: 1696 toko
+              - generic [ref=e35]: ▼
+              - generic [ref=e36]: ⚠️
+            - generic [ref=e39] [cursor=pointer]:
+              - generic [ref=e41]:
+                - generic [ref=e42]: Surabaya Timur
+                - generic [ref=e43]: 737 toko
+              - generic [ref=e44]: ▼
+              - generic [ref=e45]: ⚠️
+            - generic [ref=e48] [cursor=pointer]:
+              - generic [ref=e50]:
+                - generic [ref=e51]: Surabaya Pusat
+                - generic [ref=e52]: 3183 toko
+              - generic [ref=e53]: ▼
+              - generic [ref=e54]: ⚠️
+            - generic [ref=e57] [cursor=pointer]:
+              - generic [ref=e59]:
+                - generic [ref=e60]: Surabaya Utara
+                - generic [ref=e61]: 654 toko
+              - generic [ref=e62]: ▼
+              - generic [ref=e63]: ⚠️
+            - generic [ref=e66] [cursor=pointer]:
+              - generic [ref=e68]:
+                - generic [ref=e69]: Belum Ter-assign
+                - generic [ref=e70]: 953 toko
+              - generic [ref=e71]: ▼
+      - generic [ref=e2934]:
+        - button "🏭" [ref=e2935] [cursor=pointer]:
+          - generic [ref=e2937]: 🏭
+        - generic:
+          - generic [ref=e2938]:
+            - button "Zoom in" [ref=e2939] [cursor=pointer]: +
+            - button "Zoom out" [ref=e2940] [cursor=pointer]: −
+          - generic [ref=e2941]:
+            - link "Leaflet" [ref=e2942] [cursor=pointer]:
+              - /url: https://leafletjs.com
+              - img [ref=e2943]
+              - text: Leaflet
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e2947] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e2953] [cursor=pointer]:
+    - img [ref=e2954]
+  - alert [ref=e2957]

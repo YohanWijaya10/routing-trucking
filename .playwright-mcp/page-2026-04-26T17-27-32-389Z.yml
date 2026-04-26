@@ -1,0 +1,54 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Area Mapping" [level=1] [ref=e8]
+          - paragraph [ref=e9]: 26,701 toko aktif
+    - generic [ref=e12]:
+      - complementary [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]: Buat Area Baru
+          - generic [ref=e16]:
+            - textbox "Nama area..." [ref=e17]
+            - button "✏️ Draw" [ref=e18] [cursor=pointer]
+        - generic [ref=e19]:
+          - heading "📍 Area (2)" [level=3] [ref=e32]
+          - generic [ref=e22]:
+            - generic [ref=e34]:
+              - generic [ref=e36]:
+                - generic [ref=e37]: han
+                - generic [ref=e38]: 241 toko
+              - button "✏️" [ref=e39] [cursor=pointer]
+              - button "🗑" [ref=e40] [cursor=pointer]
+            - generic [ref=e42]:
+              - generic [ref=e44]:
+                - generic [ref=e45]: han2
+                - generic [ref=e46]: 201 toko
+              - button "✏️" [ref=e47] [cursor=pointer]
+              - button "🗑" [ref=e48] [cursor=pointer]
+            - generic [ref=e27]:
+              - generic [ref=e28]: Belum Ter-assign
+              - generic [ref=e29]: 26268 toko
+      - generic [active] [ref=e49]:
+        - generic:
+          - generic:
+            - img
+          - button "🏭" [ref=e52] [cursor=pointer]:
+            - generic [ref=e54]: 🏭
+        - generic:
+          - generic [ref=e55]:
+            - button "Zoom in" [ref=e56] [cursor=pointer]: +
+            - button "Zoom out" [ref=e57] [cursor=pointer]: −
+          - generic [ref=e58]:
+            - link "Leaflet" [ref=e59] [cursor=pointer]:
+              - /url: https://leafletjs.com
+              - img [ref=e60]
+              - text: Leaflet
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e64] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e70] [cursor=pointer]:
+    - img [ref=e71]
+  - alert [ref=e31]

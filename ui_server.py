@@ -48,7 +48,19 @@ def json_response(handler: BaseHTTPRequestHandler, status: int, payload: dict) -
     handler.wfile.write(body)
 
 
-def fetch_customers(database_url: str, city: str = "surabaya", limit: int = 100) -> list[dict]:
+def fetch_customers(database_url: str, city: str | None = None, limit: int | None = None) -> list[dict]:
+    where_clauses = [
+        "TRIM(lat) ~ '^-?[0-9]+(\\.[0-9]+)?$'",
+        "TRIM(long) ~ '^-?[0-9]+(\\.[0-9]+)?$'",
+        "TRIM(lat) <> '0'",
+        "TRIM(long) <> '0'",
+        "status = '2'",
+    ]
+    if city:
+        escaped_city = city.replace("'", "''")
+        where_clauses.append(f"kota ILIKE '%{escaped_city}%'")
+    where_sql = " AND ".join(where_clauses)
+    limit_sql = f"LIMIT {int(limit)}" if limit else ""
     sql = f"""
     SELECT
       id_customer,
@@ -58,13 +70,9 @@ def fetch_customers(database_url: str, city: str = "surabaya", limit: int = 100)
       TRIM(lat) AS lat,
       TRIM(long) AS long
     FROM public."Customer"
-    WHERE kota ILIKE '%{city.replace("'", "''")}%'
-      AND TRIM(lat) ~ '^-?[0-9]+(\\.[0-9]+)?$'
-      AND TRIM(long) ~ '^-?[0-9]+(\\.[0-9]+)?$'
-      AND TRIM(lat) <> '0'
-      AND TRIM(long) <> '0'
+    WHERE {where_sql}
     ORDER BY random()
-    LIMIT {int(limit)};
+    {limit_sql};
     """
     proc = subprocess.run(
         ["psql", database_url, "-At", "-F", "\t", "-c", sql],

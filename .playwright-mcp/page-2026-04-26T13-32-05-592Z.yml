@@ -1,0 +1,176 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Area Management" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Kelompokkan kecamatan ke area pengiriman
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - paragraph [ref=e13]: Total Area
+          - paragraph [ref=e14]: "8"
+        - generic [ref=e15]:
+          - paragraph [ref=e16]: Total Kecamatan
+          - paragraph [ref=e17]: "0"
+        - generic [ref=e18]:
+          - paragraph [ref=e19]: Kecamatan Ter-assign
+          - paragraph [ref=e20]: "80"
+        - generic [ref=e21]:
+          - paragraph [ref=e22]: Belum Ter-assign
+          - paragraph [ref=e23]: "0"
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - heading "Tambah Area Baru" [level=3] [ref=e26]
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - text: Nama Area
+              - 'textbox "Contoh: Surabaya Barat" [ref=e29]'
+            - generic [ref=e30]:
+              - text: Warna
+              - generic [ref=e31]:
+                - button [ref=e32] [cursor=pointer]
+                - button [ref=e33] [cursor=pointer]
+                - button [ref=e34] [cursor=pointer]
+                - button [ref=e35] [cursor=pointer]
+                - button [ref=e36] [cursor=pointer]
+                - button [ref=e37] [cursor=pointer]
+                - button [ref=e38] [cursor=pointer]
+                - button [ref=e39] [cursor=pointer]
+            - generic [ref=e40]:
+              - text: Pilih Kecamatan
+              - textbox "Cari kecamatan..." [ref=e41]
+              - paragraph [ref=e43]: 0 kecamatan dipilih
+            - button "+ Tambah Area" [disabled] [ref=e44]
+        - generic [ref=e45]:
+          - heading "Daftar Area (8)" [level=3] [ref=e46]
+          - generic [ref=e47]:
+            - generic [ref=e48]:
+              - heading "Surabaya Barat" [level=4] [ref=e50]
+              - generic [ref=e51]: 7 kecamatan
+              - button "🗑" [ref=e52] [cursor=pointer]
+            - generic [ref=e53]:
+              - generic [ref=e54]: Lakarsantri
+              - generic [ref=e55]: Sambikerep
+              - generic [ref=e56]: Tandes
+              - generic [ref=e57]: Benowo
+              - generic [ref=e58]: Pakal
+              - generic [ref=e59]: Asemrowo
+              - generic [ref=e60]: Suko Manunggal
+          - generic [ref=e61]:
+            - generic [ref=e62]:
+              - heading "Surabaya Selatan" [level=4] [ref=e64]
+              - generic [ref=e65]: 7 kecamatan
+              - button "🗑" [ref=e66] [cursor=pointer]
+            - generic [ref=e67]:
+              - generic [ref=e68]: Karang Pilang
+              - generic [ref=e69]: Jambangan
+              - generic [ref=e70]: Gayungan
+              - generic [ref=e71]: Wonocolo
+              - generic [ref=e72]: Wiyung
+              - generic [ref=e73]: Dukuh Pakis
+              - generic [ref=e74]: Wonokromo
+          - generic [ref=e75]:
+            - generic [ref=e76]:
+              - heading "Surabaya Timur" [level=4] [ref=e78]
+              - generic [ref=e79]: 6 kecamatan
+              - button "🗑" [ref=e80] [cursor=pointer]
+            - generic [ref=e81]:
+              - generic [ref=e82]: Rungkut
+              - generic [ref=e83]: Gunung Anyar
+              - generic [ref=e84]: Sukolilo
+              - generic [ref=e85]: Mulyorejo
+              - generic [ref=e86]: Tenggilis Mejoyo
+              - generic [ref=e87]: Tambaksari
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - heading "Surabaya Pusat" [level=4] [ref=e91]
+              - generic [ref=e92]: 6 kecamatan
+              - button "🗑" [ref=e93] [cursor=pointer]
+            - generic [ref=e94]:
+              - generic [ref=e95]: Gubeng
+              - generic [ref=e96]: Tegalsari
+              - generic [ref=e97]: Genteng
+              - generic [ref=e98]: Sawahan
+              - generic [ref=e99]: Bubutan
+              - generic [ref=e100]: Simokerto
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - heading "Surabaya Utara" [level=4] [ref=e104]
+              - generic [ref=e105]: 5 kecamatan
+              - button "🗑" [ref=e106] [cursor=pointer]
+            - generic [ref=e107]:
+              - generic [ref=e108]: Krembangan
+              - generic [ref=e109]: Semampir
+              - generic [ref=e110]: Kenjeran
+              - generic [ref=e111]: Bulak
+              - generic [ref=e112]: Pabean Cantian
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - heading "Gresik" [level=4] [ref=e116]
+              - generic [ref=e117]: 14 kecamatan
+              - button "🗑" [ref=e118] [cursor=pointer]
+            - generic [ref=e119]:
+              - generic [ref=e120]: Gresik
+              - generic [ref=e121]: Kebomas
+              - generic [ref=e122]: Menganti
+              - generic [ref=e123]: Cerme
+              - generic [ref=e124]: Duduk Sampeyan
+              - generic [ref=e125]: Balong Panggang
+              - generic [ref=e126]: Driyorejo
+              - generic [ref=e127]: Kedamean
+              - generic [ref=e128]: Wringin Anom
+              - generic [ref=e129]: Manyar
+              - generic [ref=e130]: Ujung Pangkah
+              - generic [ref=e131]: Sidayu
+              - generic [ref=e132]: Sangkapura
+              - generic [ref=e133]: Tambak
+          - generic [ref=e134]:
+            - generic [ref=e135]:
+              - heading "Sidoarjo" [level=4] [ref=e137]
+              - generic [ref=e138]: 15 kecamatan
+              - button "🗑" [ref=e139] [cursor=pointer]
+            - generic [ref=e140]:
+              - generic [ref=e141]: Sidoarjo
+              - generic [ref=e142]: Buduran
+              - generic [ref=e143]: Candi
+              - generic [ref=e144]: Porong
+              - generic [ref=e145]: Taman
+              - generic [ref=e146]: Tanggulangin
+              - generic [ref=e147]: Waru
+              - generic [ref=e148]: Gedangan
+              - generic [ref=e149]: Krian
+              - generic [ref=e150]: Sedati
+              - generic [ref=e151]: Tulangan
+              - generic [ref=e152]: Wonoayu
+              - generic [ref=e153]: Jabon
+              - generic [ref=e154]: Krembung
+              - generic [ref=e155]: Balong Bendo
+          - generic [ref=e156]:
+            - generic [ref=e157]:
+              - heading "Jombang" [level=4] [ref=e159]
+              - generic [ref=e160]: 20 kecamatan
+              - button "🗑" [ref=e161] [cursor=pointer]
+            - generic [ref=e162]:
+              - generic [ref=e163]: Jombang
+              - generic [ref=e164]: Mojowarno
+              - generic [ref=e165]: Bareng
+              - generic [ref=e166]: Diwek
+              - generic [ref=e167]: Wonosalam
+              - generic [ref=e168]: Mojoagung
+              - generic [ref=e169]: Sumobito
+              - generic [ref=e170]: Kesamben
+              - generic [ref=e171]: Gudo
+              - generic [ref=e172]: Ngusikan
+              - generic [ref=e173]: Ploso
+              - generic [ref=e174]: Kabuh
+              - generic [ref=e175]: Plandaan
+              - generic [ref=e176]: Bandar Kedung Mulyo
+              - generic [ref=e177]: Perak
+              - generic [ref=e178]: Tembelang
+              - generic [ref=e179]: Kudu
+              - generic [ref=e180]: Peterongan
+              - generic [ref=e181]: Ngoro
+              - generic [ref=e182]: Megaluh
+  - alert [ref=e183]

@@ -1,0 +1,116 @@
+[     974ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[   64161ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js:25630
+[  115090ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[  115550ms] [LOG] [Fast Refresh] done in 460ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1173201ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 1173573ms] [LOG] [Fast Refresh] done in 373ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1213372ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 1213597ms] [LOG] [Fast Refresh] done in 225ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1356850ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/hot-reloader/app/hot-reloader-app.js:196
+[ 1357086ms] [LOG] [Fast Refresh] done in 236ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/dev/report-hmr-latency.js:13
+[ 1357612ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/routes?_rsc=1x5we:0
+[ 1357838ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/routes?_rsc=1x5we:0
+[ 1358122ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/routes:0
+[ 1358313ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(pages-dir-browser)/./node_modules/react-dom/cjs/react-dom-client.development.js:28004
+[ 1358371ms] Error: Cannot find module './331.js'
+Require stack:
+- /Users/yohanwijaya/Desktop/truckingarea/.next/server/webpack-runtime.js
+- /Users/yohanwijaya/Desktop/truckingarea/.next/server/pages/_document.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/load-components.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/build/utils.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/build/swc/options.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/build/swc/index.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/build/analysis/parse-module.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/build/analysis/get-page-static-info.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js
+- /Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1383:15)
+    at <unknown> (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require-hook.js:57:36)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)
+    at Function._load (node:internal/modules/cjs/loader:1192:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require-hook.js:68:28)
+    at require (node:internal/modules/helpers:147:16)
+    at __webpack_require__.f.require (file:///Users/yohanwijaya/Desktop/truckingarea/.next/server/webpack-runtime.js:190:28)
+    at <unknown> (file:///Users/yohanwijaya/Desktop/truckingarea/.next/server/webpack-runtime.js:103:40)
+    at Array.reduce (<anonymous>)
+    at __webpack_require__.e (file:///Users/yohanwijaya/Desktop/truckingarea/.next/server/webpack-runtime.js:102:67)
+    at Array.map (<anonymous>)
+    at __webpack_require__.X (file:///Users/yohanwijaya/Desktop/truckingarea/.next/server/webpack-runtime.js:154:22)
+    at <unknown> (file:///Users/yohanwijaya/Desktop/truckingarea/.next/server/app/routes/page.js:2:7461)
+    at Object.<anonymous> (file:///Users/yohanwijaya/Desktop/truckingarea/.next/server/app/routes/page.js:2:7510)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Object..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require-hook.js:68:28)
+    at require (node:internal/modules/helpers:147:16)
+    at requirePage (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require.js:99:80)
+    at loadComponentsImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/load-components.js:132:57)
+    at async DevServer.findPageComponentsImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/next-server.js:899:36)
+    at async DevServer.findPageComponents (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/dev/next-dev-server.js:706:16)
+    at async DevServer.renderPageComponent (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:1460:24)
+    at async DevServer.renderToResponseImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:1514:32)
+    at async DevServer.pipeImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:1025:25)
+    at async NextNodeServer.handleCatchallRenderRequest (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/next-server.js:393:17)
+    at async DevServer.handleRequestImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:916:17)
+    at async (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/dev/next-dev-server.js:400:20)
+    at async Span.traceAsyncFn (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async requestHandlerImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js:485:13)
+    at async Server.requestListener (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/start-server.js:226:13)
+[ 1358370ms] [LOG] [HMR] connected @ webpack-internal:///(pages-dir-browser)/./node_modules/next/dist/client/dev/hot-reloader/pages/websocket.js:45
+[ 1409405ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(pages-dir-browser)/./node_modules/next/dist/client/dev/hot-reloader/pages/hot-reloader-pages.js:206
+[ 1409483ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ webpack-internal:///(pages-dir-browser)/./node_modules/next/dist/client/dev/hot-reloader/pages/hot-reloader-pages.js:347
+[ 1410888ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3000/routes:0
+[ 1411067ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(pages-dir-browser)/./node_modules/react-dom/cjs/react-dom-client.development.js:28004
+[ 1411122ms] Error: ENOENT: no such file or directory, open '/Users/yohanwijaya/Desktop/truckingarea/.next/server/pages/_document.js'
+    at Object.readFileSync (node:fs:440:20)
+    at defaultLoadImpl (node:internal/modules/cjs/loader:1105:17)
+    at loadSource (node:internal/modules/cjs/loader:1732:20)
+    at Object..js (node:internal/modules/cjs/loader:1831:44)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Function._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1463:12)
+    at mod.require (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require-hook.js:68:28)
+    at require (node:internal/modules/helpers:147:16)
+    at requirePage (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/require.js:99:80)
+    at loadComponentsImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/load-components.js:86:38)
+    at DevServer.findPageComponentsImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/next-server.js:899:77)
+    at <unknown> (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/next-server.js:877:21)
+    at <unknown> (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/trace/tracer.js:184:36)
+    at NoopContextManager.with (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NoopTracer.startActiveSpan (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18093)
+    at ProxyTracer.startActiveSpan (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:18854)
+    at <unknown> (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/trace/tracer.js:153:103)
+    at NoopContextManager.with (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:7062)
+    at ContextAPI.with (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/compiled/@opentelemetry/api/index.js:1:518)
+    at NextTracerImpl.trace (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/trace/tracer.js:153:28)
+    at DevServer.findPageComponents (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/next-server.js:872:41)
+    at DevServer.findPageComponents (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/dev/next-dev-server.js:706:28)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:1687:26)
+    at async pipe.req.req (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:1610:30)
+    at async DevServer.pipeImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:1025:25)
+    at async NextNodeServer.handleCatchallRenderRequest (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/next-server.js:408:21)
+    at async DevServer.handleRequestImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/base-server.js:916:17)
+    at async (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/dev/next-dev-server.js:400:20)
+    at async Span.traceAsyncFn (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/trace/trace.js:157:20)
+    at async DevServer.handleRequest (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/dev/next-dev-server.js:396:24)
+    at async invokeRender (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js:240:21)
+    at async handleRequest (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js:437:24)
+    at async requestHandlerImpl (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/router-server.js:485:13)
+    at async Server.requestListener (file:///Users/yohanwijaya/Desktop/truckingarea/node_modules/next/dist/server/lib/start-server.js:226:13)
+[ 1411122ms] [LOG] [HMR] connected @ webpack-internal:///(pages-dir-browser)/./node_modules/next/dist/client/dev/hot-reloader/pages/websocket.js:45

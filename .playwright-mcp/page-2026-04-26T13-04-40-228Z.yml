@@ -1,0 +1,117 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e6]:
+      - generic [ref=e7]:
+        - generic [ref=e9]: 🚛
+        - generic [ref=e10]:
+          - heading "Route Planner" [level=1] [ref=e11]
+          - paragraph [ref=e12]: Logistik Jawa Timur
+      - generic [ref=e13]:
+        - combobox [ref=e14]:
+          - option "Auto Solver" [selected]
+          - option "OR-Tools"
+          - option "Greedy"
+        - textbox "Kota..." [active] [ref=e15]: surabaya
+        - spinbutton [ref=e16]: "100"
+        - button "🔄 Load Data" [ref=e17] [cursor=pointer]
+        - button "▶ Generate Rute" [ref=e18] [cursor=pointer]
+    - generic [ref=e19]:
+      - complementary [ref=e20]:
+        - generic [ref=e21]:
+          - button "📋 Toko (8)" [ref=e22] [cursor=pointer]
+          - button "🚛 Truck (4)" [ref=e23] [cursor=pointer]
+          - button "🗺 Rute" [ref=e24] [cursor=pointer]
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - generic [ref=e29]: 🔍
+              - textbox "Cari nama toko, kecamatan..." [ref=e30]
+            - generic [ref=e31]:
+              - combobox [ref=e32]:
+                - option "Semua Kota" [selected]
+              - combobox [ref=e33]:
+                - option "Semua Kecamatan" [selected]
+          - generic [ref=e34]:
+            - button "Pilih Semua" [ref=e35] [cursor=pointer]
+            - button "Bersihkan" [ref=e36] [cursor=pointer]
+          - generic [ref=e37]:
+            - generic [ref=e41] [cursor=pointer]:
+              - paragraph [ref=e43]: Sambikerep Mart
+              - paragraph [ref=e44]: 📍 - | -
+              - generic [ref=e46]: 📦 450 kg
+            - generic [ref=e50] [cursor=pointer]:
+              - paragraph [ref=e52]: Jambangan Plastik
+              - paragraph [ref=e53]: 📍 - | -
+              - generic [ref=e55]: 📦 800 kg
+            - generic [ref=e59] [cursor=pointer]:
+              - paragraph [ref=e61]: Wonokromo Toko Besar
+              - paragraph [ref=e62]: 📍 - | -
+              - generic [ref=e64]: 📦 1200 kg
+            - generic [ref=e68] [cursor=pointer]:
+              - paragraph [ref=e70]: Rungkut Sentra
+              - paragraph [ref=e71]: 📍 - | -
+              - generic [ref=e73]: 📦 900 kg
+            - generic [ref=e77] [cursor=pointer]:
+              - paragraph [ref=e79]: Lakarsantri Grosir
+              - paragraph [ref=e80]: 📍 - | -
+              - generic [ref=e82]: 📦 700 kg
+            - generic [ref=e86] [cursor=pointer]:
+              - paragraph [ref=e88]: Tandes Makmur
+              - paragraph [ref=e89]: 📍 - | -
+              - generic [ref=e91]: 📦 650 kg
+            - generic [ref=e95] [cursor=pointer]:
+              - paragraph [ref=e97]: Gunung Anyar Sentosa
+              - paragraph [ref=e98]: 📍 - | -
+              - generic [ref=e100]: 📦 500 kg
+            - generic [ref=e104] [cursor=pointer]:
+              - paragraph [ref=e106]: Benowo Jaya
+              - paragraph [ref=e107]: 📍 - | -
+              - generic [ref=e109]: 📦 400 kg
+        - generic [ref=e112]: Siap
+      - main [ref=e113]:
+        - generic [ref=e114]:
+          - generic:
+            - generic:
+              - button "🏭" [ref=e115] [cursor=pointer]:
+                - generic [ref=e117]: 🏭
+              - button "1" [ref=e118] [cursor=pointer]:
+                - generic [ref=e120]: "1"
+              - button "2" [ref=e121] [cursor=pointer]:
+                - generic [ref=e123]: "2"
+              - button "3" [ref=e124] [cursor=pointer]:
+                - generic [ref=e126]: "3"
+              - button "4" [ref=e127] [cursor=pointer]:
+                - generic [ref=e129]: "4"
+              - button "5" [ref=e130] [cursor=pointer]:
+                - generic [ref=e132]: "5"
+              - button "6" [ref=e133] [cursor=pointer]:
+                - generic [ref=e135]: "6"
+              - button "7" [ref=e136] [cursor=pointer]:
+                - generic [ref=e138]: "7"
+              - button "8" [ref=e139] [cursor=pointer]:
+                - generic [ref=e141]: "8"
+          - generic:
+            - generic [ref=e142]:
+              - button "Zoom in" [ref=e143] [cursor=pointer]: +
+              - button "Zoom out" [ref=e144] [cursor=pointer]: −
+            - generic [ref=e145]:
+              - link "Leaflet" [ref=e146] [cursor=pointer]:
+                - /url: https://leafletjs.com
+                - img [ref=e147]
+                - text: Leaflet
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=e151] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+        - generic [ref=e153]:
+          - paragraph [ref=e154]: 📍 Peta Customer
+          - paragraph [ref=e155]: 8 toko | 4 truck
+        - generic [ref=e156]:
+          - paragraph [ref=e157]: Truck
+          - generic [ref=e158]:
+            - generic [ref=e161]: TRUCK-1
+            - generic [ref=e164]: TRUCK-2
+            - generic [ref=e167]: TRUCK-3
+            - generic [ref=e170]: TRUCK-4
+  - button "Open Next.js Dev Tools" [ref=e176] [cursor=pointer]:
+    - img [ref=e177]
+  - alert [ref=e180]

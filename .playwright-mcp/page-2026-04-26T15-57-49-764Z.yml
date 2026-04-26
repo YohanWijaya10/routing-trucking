@@ -1,0 +1,80 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]: 🗺
+      - generic [ref=e7]:
+        - heading "Route Planner" [level=1] [ref=e8]
+        - paragraph [ref=e9]: 0 toko aktif
+  - complementary [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: Kota
+      - combobox [ref=e14]:
+        - option "Surabaya" [selected]
+        - option "Gresik"
+        - option "Sidoarjo"
+        - option "Jombang"
+        - option "Mojokerto"
+        - option "Kediri"
+        - option "Malang"
+        - option "Blitar"
+        - option "Jember"
+        - option "Banyuwangi"
+        - option "Probolinggo"
+        - option "Pasuruan"
+        - option "Bangkalan"
+        - option "Sampang"
+        - option "Pamekasan"
+        - option "Sumenep"
+        - option "Bondowoso"
+        - option "Situbondo"
+        - option "Lumajang"
+        - option "Trenggalek"
+        - option "Tulungagung"
+        - option "Ponorogo"
+        - option "Magetan"
+        - option "Nganjuk"
+        - option "Madiun"
+        - option "Pacitan"
+        - option "Ngawi"
+        - option "Bojonegoro"
+        - option "Tuban"
+        - option "Lamongan"
+        - option "Batu"
+    - generic [ref=e15]:
+      - heading "📍 Area & Toko" [level=3] [ref=e17]
+      - generic [ref=e18]:
+        - generic [ref=e21] [cursor=pointer]:
+          - generic [ref=e23]:
+            - generic [ref=e24]: Surabaya Barat
+            - generic [ref=e25]: 0 toko
+          - generic [ref=e26]: ▼
+          - generic [ref=e27]: ⚠️
+        - generic [ref=e30] [cursor=pointer]:
+          - generic [ref=e32]:
+            - generic [ref=e33]: Surabaya Selatan
+            - generic [ref=e34]: 0 toko
+          - generic [ref=e35]: ▼
+          - generic [ref=e36]: ⚠️
+        - generic [ref=e39] [cursor=pointer]:
+          - generic [ref=e41]:
+            - generic [ref=e42]: Surabaya Timur
+            - generic [ref=e43]: 0 toko
+          - generic [ref=e44]: ▼
+          - generic [ref=e45]: ⚠️
+        - generic [ref=e48] [cursor=pointer]:
+          - generic [ref=e50]:
+            - generic [ref=e51]: Surabaya Pusat
+            - generic [ref=e52]: 0 toko
+          - generic [ref=e53]: ▼
+          - generic [ref=e54]: ⚠️
+        - generic [ref=e57] [cursor=pointer]:
+          - generic [ref=e59]:
+            - generic [ref=e60]: Surabaya Utara
+            - generic [ref=e61]: 0 toko
+          - generic [ref=e62]: ▼
+          - generic [ref=e63]: ⚠️
+        - generic [ref=e66] [cursor=pointer]:
+          - generic [ref=e68]:
+            - generic [ref=e69]: Belum Ter-assign
+            - generic [ref=e70]: 0 toko
+          - generic [ref=e71]: ▼

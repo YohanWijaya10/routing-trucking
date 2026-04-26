@@ -1,0 +1,23 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Area Mapping" [level=1] [ref=e8]
+          - paragraph [ref=e9]: 0 toko aktif
+      - generic [ref=e11]: ⏳ Memuat...
+    - complementary [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]: Buat Area Baru
+        - generic [ref=e16]:
+          - textbox "Nama area..." [ref=e17]
+          - button "✏️ Draw" [ref=e18] [cursor=pointer]
+      - generic [ref=e19]:
+        - heading "📍 Area (0)" [level=3] [ref=e21]
+        - generic [ref=e22]:
+          - paragraph [ref=e23]: Belum ada area
+          - generic [ref=e27]:
+            - generic [ref=e28]: Belum Ter-assign
+            - generic [ref=e29]: 0 toko
+  - alert [ref=e31]

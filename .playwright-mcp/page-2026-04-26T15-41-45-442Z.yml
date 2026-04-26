@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🗺
+        - generic [ref=e7]:
+          - heading "Route Planner" [level=1] [ref=e8]
+          - paragraph [ref=e9]: Sidoarjo — 1,828 toko
+      - button "← Ganti Kota" [ref=e119] [cursor=pointer]
+    - generic [ref=e10]:
+      - complementary [ref=e120]:
+        - heading "📍 Area" [level=3] [ref=e122]
+        - generic [ref=e123]:
+          - generic [ref=e125] [cursor=pointer]:
+            - generic [ref=e127]:
+              - generic [ref=e128]: Sidoarjo Barat
+              - generic [ref=e129]: 281 toko
+            - generic [ref=e130]: ⚠️
+          - generic [ref=e132] [cursor=pointer]:
+            - generic [ref=e134]:
+              - generic [ref=e135]: Sidoarjo Timur
+              - generic [ref=e136]: 354 toko
+            - generic [ref=e137]: ⚠️
+          - generic [ref=e141] [cursor=pointer]:
+            - generic [ref=e142]: Belum Ter-assign
+            - generic [ref=e143]: 1193 toko
+      - main [ref=e144]:
+        - generic [ref=e146]:
+          - generic [ref=e147]: 🗺
+          - paragraph [ref=e148]: Pilih area di sidebar untuk melihat toko
+      - generic [ref=e149]:
+        - heading "🗺 Peta" [level=3] [ref=e151]
+        - generic [ref=e153]:
+          - button "🏭" [ref=e154] [cursor=pointer]:
+            - generic [ref=e156]: 🏭
+          - generic:
+            - generic [ref=e157]:
+              - button "Zoom in" [ref=e158] [cursor=pointer]: +
+              - button "Zoom out" [ref=e159] [cursor=pointer]: −
+            - generic [ref=e160]:
+              - link "Leaflet" [ref=e161] [cursor=pointer]:
+                - /url: https://leafletjs.com
+                - img [ref=e162]
+                - text: Leaflet
+              - text: "| ©"
+              - link "OpenStreetMap" [ref=e166] [cursor=pointer]:
+                - /url: https://www.openstreetmap.org/copyright
+  - button "Open Next.js Dev Tools" [ref=e113] [cursor=pointer]:
+    - img [ref=e114]
+  - alert [ref=e117]
