@@ -64,6 +64,12 @@ export ORS_API_KEY="isi_api_key_anda"
 python3 route_planner.py sample_input.json --use-ors --solver auto
 ```
 
+Dengan env database untuk dummy customer:
+
+```bash
+cp .env.example .env.local
+```
+
 Simpan hasil JSON:
 
 ```bash
@@ -93,9 +99,17 @@ UI ini bisa:
 - load sample data
 - tambah/hapus truck
 - tambah/hapus order
+- edit mapping customer per order
 - pilih solver
 - pilih pakai ORS atau estimasi bawaan
 - lihat hasil ringkasan dan rute per truck
+
+Env yang dipakai:
+
+- `DATABASE_URL` untuk load customer dari database
+- `DEFAULT_CITY` untuk default filter kota
+- `DEFAULT_DUMMY_COUNT` untuk default jumlah dummy
+- `ORS_API_KEY` untuk fallback key server-side
 ```
 
 ## Flow MVP
@@ -114,3 +128,4 @@ UI ini bisa:
 - Kalau `OR-Tools` belum ada, script tetap jalan dengan solver greedy
 - Prototype ini belum menyimpan histori dan belum pakai database
 # map-routes
+# trucking-area
