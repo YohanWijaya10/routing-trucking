@@ -119,6 +119,7 @@ export default function RoutesPage() {
   const pathname = usePathname();
   const [areas, setAreas] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [trucks, setTrucks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [drawMode, setDrawMode] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -131,6 +132,11 @@ export default function RoutesPage() {
   const [selectedArea, setSelectedArea] = useState(null);
   const [areaDetail, setAreaDetail] = useState(null);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [detailTab, setDetailTab] = useState("transactions");
+  const [routeTruckId, setRouteTruckId] = useState("");
+  const [routePlanning, setRoutePlanning] = useState(false);
+  const [routePlan, setRoutePlan] = useState(null);
+  const [routeError, setRouteError] = useState("");
   const [areaSearch, setAreaSearch] = useState("");
 
   // Load ALL saved areas from DB (all cities)
@@ -146,6 +152,18 @@ export default function RoutesPage() {
     }
   }, []);
 
+  const loadTrucks = useCallback(async () => {
+    try {
+      const res = await fetch("/api/trucks");
+      const data = await res.json();
+      if (data.trucks) {
+        setTrucks(data.trucks);
+      }
+    } catch (e) {
+      console.error("Failed to load trucks:", e);
+    }
+  }, []);
+
   // Load ALL active customers (all cities)
   useEffect(() => {
     const loadData = async () => {
@@ -153,11 +171,11 @@ export default function RoutesPage() {
       setOrders([]);
       setEditingAreaId(null);
       setPendingPolygon(null);
-      await loadAreas();
+      await Promise.all([loadAreas(), loadTrucks()]);
       setLoading(false);
     };
     loadData();
-  }, [loadAreas]);
+  }, [loadAreas, loadTrucks]);
 
   // Check if point is inside polygon
   const isPointInPolygon = (point, polygon) => {
@@ -192,6 +210,10 @@ export default function RoutesPage() {
     setSelectedArea(area);
     setDetailLoading(true);
     setAreaDetail(null);
+    setDetailTab("transactions");
+    setRoutePlan(null);
+    setRouteError("");
+    setRouteTruckId("");
     try {
       const res = await fetch(`/api/area-detail?id=${area.id}`);
       const data = await res.json();
@@ -208,6 +230,9 @@ export default function RoutesPage() {
   const closeAreaDetail = () => {
     setSelectedArea(null);
     setAreaDetail(null);
+    setRoutePlan(null);
+    setRouteError("");
+    setRouteTruckId("");
   };
 
   // When polygon is drawn -> show modal to name it
@@ -304,7 +329,89 @@ export default function RoutesPage() {
     return area.name?.toLowerCase().includes(q);
   });
 
+  const preferredTrucks = selectedArea
+    ? trucks.filter((truck) => (truck.area_ids || []).includes(selectedArea.id))
+    : [];
+
+  const routeTruckOptions = preferredTrucks.length > 0 ? preferredTrucks : trucks;
+
+  const mapRoutes = routePlan?.routes || [];
+
+  const generateAreaRoute = useCallback(async () => {
+    const selectedTruck = routeTruckOptions.find((truck) => String(truck.id) === String(routeTruckId));
+    const customers = (areaDetail?.customers || []).filter((customer) =>
+      typeof customer?.lat === "number" && typeof customer?.lng === "number"
+    );
+
+    if (!selectedTruck) {
+      setRouteError("Pilih truck dulu.");
+      return;
+    }
+
+    if (customers.length === 0) {
+      setRouteError("Belum ada toko dengan koordinat valid di area ini.");
+      return;
+    }
+
+    const routeStops = customers.slice(0, 25);
+    setRoutePlanning(true);
+    setRouteError("");
+    setRoutePlan(null);
+
+    try {
+      const payload = {
+        depot: { name: "Gudang", lat: -7.2575, lng: 112.7521 },
+        vehicles: [
+          {
+            id: selectedTruck.name || `TRUCK-${selectedTruck.id}`,
+            capacity_kg: Math.max(Number(selectedTruck.capacity_kg) || 0, routeStops.length),
+          },
+        ],
+        orders: routeStops.map((customer, index) => ({
+          id: customer.id_customer || `CUST-${index + 1}`,
+          name: customer.nama_toko || `Toko ${index + 1}`,
+          lat: Number(customer.lat),
+          lng: Number(customer.lng),
+          demand_kg: 1,
+          service_minutes: 10,
+          district: customer.kecamatan || "",
+          district_label: customer.kecamatan || "",
+          area_id: selectedArea?.id || 0,
+          area_label: selectedArea?.name || "Area",
+        })),
+      };
+
+      const res = await fetch("/api/plan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          payload,
+          solver: "greedy",
+          use_ors: true,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Gagal generate rute");
+      }
+      setRoutePlan(data);
+      setDetailTab("route");
+    } catch (error) {
+      setRouteError(error.message);
+    } finally {
+      setRoutePlanning(false);
+    }
+  }, [areaDetail?.customers, routeTruckOptions, routeTruckId, selectedArea]);
+
   const isAreaRoute = pathname === "/routes" || pathname === "/";
+
+  useEffect(() => {
+    if (!selectedArea) return;
+    if (routeTruckId) return;
+    if (routeTruckOptions.length > 0) {
+      setRouteTruckId(String(routeTruckOptions[0].id));
+    }
+  }, [selectedArea, routeTruckId, routeTruckOptions]);
 
   return (
     <div className="h-screen overflow-hidden bg-[#f4f7fb]">
@@ -383,50 +490,192 @@ export default function RoutesPage() {
                 </div>
               ) : areaDetail ? (
                 <>
-                  <div className="border-b border-slate-200/80 bg-white px-5 py-3 pt-4">
-                    <p className="text-[11px] font-semibold text-slate-700">100 SO Terbaru</p>
+                  <div className="grid grid-cols-3 gap-3 border-b border-slate-200/80 bg-white px-5 py-4">
+                    <div className="rounded-2xl bg-slate-50 px-3 py-3 text-center">
+                      <div className="text-sm font-bold text-slate-900">{(areaDetail.total_customers || 0).toLocaleString("id-ID")}</div>
+                      <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-slate-500">Toko</div>
+                    </div>
+                    <div className="rounded-2xl bg-slate-50 px-3 py-3 text-center">
+                      <div className="text-sm font-bold text-slate-900">{(areaDetail.total_transactions || 0).toLocaleString("id-ID")}</div>
+                      <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-slate-500">SO</div>
+                    </div>
+                    <div className="rounded-2xl bg-emerald-50 px-3 py-3 text-center">
+                      <div className="text-sm font-bold text-primary-600">{formatRupiah(areaDetail.grand_total)}</div>
+                      <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-emerald-700/70">Nilai</div>
+                    </div>
                   </div>
 
-                  <div className="min-h-0 flex-1 overflow-y-auto divide-y divide-slate-100">
-                    {(() => {
-                      // Group transactions by store name
-                      const grouped = {};
-                      (areaDetail.transactions || []).forEach((t) => {
-                        const key = t.nama_toko || "Tanpa Nama";
-                        if (!grouped[key]) grouped[key] = [];
-                        grouped[key].push(t);
-                      });
-                      return Object.entries(grouped).map(([storeName, txs]) => {
-                        const total = txs.reduce((sum, t) => sum + (t.total || 0), 0);
-                        return (
-                          <div key={storeName} className="px-5 py-4 transition-colors hover:bg-slate-50/70">
-                            <div className="flex items-start justify-between gap-2">
-                              <div className="flex-1 min-w-0">
-                                <div className="text-[12px] font-semibold text-slate-800">{storeName}</div>
-                                <div className="mt-0.5 text-[10px] text-slate-500">{txs.length} SO</div>
-                              </div>
-                              <div className="text-right shrink-0">
-                                <div className="text-[12px] font-semibold text-primary-600">{formatRupiah(total)}</div>
-                              </div>
-                            </div>
-                            <div className="mt-2 space-y-1.5 border-t border-slate-100 pt-2">
-                              {txs.map((t, i) => (
-                                <div key={t.idso + i} className="flex items-center justify-between gap-2">
-                                  <div className="text-[10px] text-slate-500">{t.idso}</div>
-                                  <div className="flex items-center gap-3">
-                                    <div className="text-[10px] font-medium text-slate-700">{formatRupiah(t.total)}</div>
-                                    <div className="text-[10px] text-slate-400 w-16 text-right">{formatDate(t.tanggal)}</div>
+                  <div className="flex border-b border-slate-200/80 bg-white px-3">
+                    {[
+                      { key: "transactions", label: "SO Terbaru" },
+                      { key: "customers", label: "Toko" },
+                      { key: "route", label: "Rute" },
+                    ].map((tab) => (
+                      <button
+                        key={tab.key}
+                        onClick={() => setDetailTab(tab.key)}
+                        className={`flex-1 rounded-t-2xl px-3 py-3 text-[11px] font-semibold transition-colors ${
+                          detailTab === tab.key
+                            ? "border-b-2 border-primary-500 text-primary-600"
+                            : "text-slate-500 hover:text-slate-700"
+                        }`}
+                      >
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="min-h-0 flex-1 overflow-y-auto">
+                    {detailTab === "transactions" && (
+                      <div className="divide-y divide-slate-100">
+                        {(() => {
+                          const grouped = {};
+                          (areaDetail.transactions || []).forEach((t) => {
+                            const key = t.nama_toko || "Tanpa Nama";
+                            if (!grouped[key]) grouped[key] = [];
+                            grouped[key].push(t);
+                          });
+                          return Object.entries(grouped).map(([storeName, txs]) => {
+                            const total = txs.reduce((sum, t) => sum + (t.total || 0), 0);
+                            return (
+                              <div key={storeName} className="px-5 py-4 transition-colors hover:bg-slate-50/70">
+                                <div className="flex items-start justify-between gap-2">
+                                  <div className="flex-1 min-w-0">
+                                    <div className="text-[12px] font-semibold text-slate-800">{storeName}</div>
+                                    <div className="mt-0.5 text-[10px] text-slate-500">{txs.length} SO</div>
+                                  </div>
+                                  <div className="text-right shrink-0">
+                                    <div className="text-[12px] font-semibold text-primary-600">{formatRupiah(total)}</div>
                                   </div>
                                 </div>
-                              ))}
+                                <div className="mt-2 space-y-1.5 border-t border-slate-100 pt-2">
+                                  {txs.map((t, i) => (
+                                    <div key={t.idso + i} className="flex items-center justify-between gap-2">
+                                      <div className="text-[10px] text-slate-500">{t.idso}</div>
+                                      <div className="flex items-center gap-3">
+                                        <div className="text-[10px] font-medium text-slate-700">{formatRupiah(t.total)}</div>
+                                        <div className="w-16 text-right text-[10px] text-slate-400">{formatDate(t.tanggal)}</div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          });
+                        })()}
+                        {(!areaDetail.transactions || areaDetail.transactions.length === 0) && (
+                          <div className="p-6 text-center">
+                            <p className="text-[12px] text-slate-400">Tidak ada transaksi di area ini</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {detailTab === "customers" && (
+                      <div className="divide-y divide-slate-100">
+                        {(areaDetail.customers || []).map((customer, idx) => (
+                          <div key={`${customer.id_customer}-${idx}`} className="px-5 py-4 transition-colors hover:bg-slate-50/70">
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate text-[12px] font-semibold text-slate-800">{customer.nama_toko}</div>
+                                <div className="mt-0.5 text-[10px] text-slate-500">{customer.alamat || customer.kecamatan || "-"}</div>
+                                <div className="text-[10px] text-slate-400">{customer.id_customer}</div>
+                              </div>
+                              <div className="shrink-0 text-right">
+                                <div className="text-[11px] font-semibold text-primary-600">{formatRupiah(customer.transaksi_total)}</div>
+                                <div className="text-[10px] text-slate-500">{customer.transaksi_count || 0} transaksi</div>
+                              </div>
                             </div>
                           </div>
-                        );
-                      });
-                    })()}
-                    {(!areaDetail.transactions || areaDetail.transactions.length === 0) && (
-                      <div className="p-6 text-center">
-                        <p className="text-[12px] text-slate-400">Tidak ada transaksi di area ini</p>
+                        ))}
+                        {(!areaDetail.customers || areaDetail.customers.length === 0) && (
+                          <div className="p-6 text-center">
+                            <p className="text-[12px] text-slate-400">Belum ada toko aktif di area ini</p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {detailTab === "route" && (
+                      <div className="space-y-4 px-5 py-4">
+                        <div className="rounded-[22px] border border-slate-200 bg-slate-50 p-4">
+                          <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                            Rute Pengiriman
+                          </div>
+                          <p className="mb-4 text-[12px] leading-relaxed text-slate-500">
+                            Generate rute dari gudang ke toko area ini. Untuk tahap awal, sistem memakai 1 truck dan maksimal 25 toko teratas.
+                          </p>
+                          <div className="space-y-3">
+                            <select
+                              value={routeTruckId}
+                              onChange={(e) => setRouteTruckId(e.target.value)}
+                              className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+                            >
+                              <option value="">Pilih truck</option>
+                              {routeTruckOptions.map((truck) => (
+                                <option key={truck.id} value={truck.id}>
+                                  {truck.name} {truck.plate_number ? `· ${truck.plate_number}` : ""}
+                                </option>
+                              ))}
+                            </select>
+                            <button
+                              onClick={generateAreaRoute}
+                              disabled={routePlanning || routeTruckOptions.length === 0}
+                              className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary-500 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-primary-600 disabled:opacity-50"
+                            >
+                              {routePlanning && <Spinner className="text-white" />}
+                              {routePlanning ? "Membuat rute..." : "Generate Rute"}
+                            </button>
+                            {routeError && (
+                              <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-[12px] text-red-600">
+                                {routeError}
+                              </div>
+                            )}
+                            {routeTruckOptions.length === 0 && (
+                              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-[12px] text-amber-700">
+                                Belum ada truck tersedia. Buat atau assign truck dulu di halaman truck.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {routePlan && (
+                          <>
+                            <div className="grid grid-cols-3 gap-3">
+                              <div className="rounded-2xl bg-white px-3 py-3 text-center shadow-[0_12px_30px_rgba(148,163,184,0.12)]">
+                                <div className="text-sm font-bold text-slate-900">{routePlan.summary?.orders_planned || 0}</div>
+                                <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-slate-500">Stop</div>
+                              </div>
+                              <div className="rounded-2xl bg-white px-3 py-3 text-center shadow-[0_12px_30px_rgba(148,163,184,0.12)]">
+                                <div className="text-sm font-bold text-slate-900">{routePlan.summary?.total_distance_km || 0} km</div>
+                                <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-slate-500">Jarak</div>
+                              </div>
+                              <div className="rounded-2xl bg-white px-3 py-3 text-center shadow-[0_12px_30px_rgba(148,163,184,0.12)]">
+                                <div className="text-sm font-bold text-slate-900">{routePlan.summary?.total_duration_minutes || 0} min</div>
+                                <div className="mt-1 text-[10px] uppercase tracking-[0.16em] text-slate-500">Durasi</div>
+                              </div>
+                            </div>
+
+                            <div className="rounded-[22px] border border-slate-200 bg-white shadow-[0_18px_40px_rgba(148,163,184,0.12)]">
+                              <div className="border-b border-slate-100 px-4 py-3">
+                                <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Urutan Stop</div>
+                              </div>
+                              <div className="divide-y divide-slate-100">
+                                {(routePlan.routes?.[0]?.stops || []).map((stop, index) => (
+                                  <div key={`${stop.id}-${index}`} className="flex items-start gap-3 px-4 py-3">
+                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-500 text-[11px] font-bold text-white">
+                                      {index + 1}
+                                    </div>
+                                    <div className="min-w-0 flex-1">
+                                      <div className="truncate text-[12px] font-semibold text-slate-800">{stop.name}</div>
+                                      <div className="mt-0.5 text-[10px] text-slate-500">{stop.district_label || stop.area_label || "-"}</div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </div>
                     )}
                   </div>
@@ -614,12 +863,15 @@ export default function RoutesPage() {
           <div className="pointer-events-none absolute inset-0 z-[400] bg-[radial-gradient(circle_at_left_center,rgba(255,255,255,0.45),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.26),rgba(255,255,255,0.08))]" />
           <div className="pointer-events-none absolute left-8 top-8 z-[401] hidden rounded-2xl border border-white/60 bg-white/75 px-4 py-3 shadow-[0_24px_60px_rgba(148,163,184,0.18)] backdrop-blur md:block">
             <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Area Mapping</div>
-            <div className="mt-1 text-sm font-semibold text-slate-900">{orders.length.toLocaleString("id-ID")} toko aktif</div>
+            <div className="mt-1 text-sm font-semibold text-slate-900">
+              {routePlan ? `${routePlan.summary?.orders_planned || 0} stop rute` : `${orders.length.toLocaleString("id-ID")} toko aktif`}
+            </div>
           </div>
           <LeafletMap
             depot={{ name: "Gudang", lat: -7.2575, lng: 112.7521 }}
             onPolygonCreated={drawMode ? handlePolygonCreated : null}
             areaPolygons={mapPolygons}
+            routes={mapRoutes}
             drawEnabled={drawMode}
             editingAreaId={editingAreaId}
             onEditArea={handleEditArea}

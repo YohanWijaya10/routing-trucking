@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from "react-leaflet";
+import { Fragment, useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, CircleMarker, useMap, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
@@ -182,6 +182,83 @@ function OverviewFitter({ polygons, editingAreaId }) {
   return null;
 }
 
+function RouteFitter({ routes }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!routes?.length) return;
+
+    const bounds = [];
+    routes.forEach((route) => {
+      if (Array.isArray(route.geometry) && route.geometry.length > 1) {
+        route.geometry.forEach((point) => {
+          if (Array.isArray(point) && point.length === 2) bounds.push(point);
+        });
+      } else if (Array.isArray(route.stops)) {
+        route.stops.forEach((stop) => {
+          if (typeof stop?.lat === "number" && typeof stop?.lng === "number") {
+            bounds.push([stop.lat, stop.lng]);
+          }
+        });
+      }
+    });
+
+    if (bounds.length > 1) {
+      map.fitBounds(bounds, { padding: [80, 80], maxZoom: 13 });
+    }
+  }, [map, routes]);
+
+  return null;
+}
+
+function RouteLayers({ routes = [] }) {
+  const colors = ["#1a73e8", "#ea4335", "#34a853", "#9334e6", "#ff6d00", "#00bcd4"];
+
+  return routes.map((route, routeIndex) => {
+    const color = colors[routeIndex % colors.length];
+    const geometry = Array.isArray(route.geometry) ? route.geometry : [];
+    const stops = Array.isArray(route.stops) ? route.stops : [];
+
+    return (
+      <Fragment key={`${route.vehicle_id || "route"}-${routeIndex}`}>
+        {geometry.length > 1 && (
+          <Polyline
+            positions={geometry}
+            pathOptions={{
+              color,
+              weight: 5,
+              opacity: 0.9,
+            }}
+          />
+        )}
+
+        {stops.map((stop, stopIndex) => (
+          <CircleMarker
+            key={`${routeIndex}-${stop.id || stopIndex}`}
+            center={[stop.lat, stop.lng]}
+            radius={8}
+            pathOptions={{
+              color: "#ffffff",
+              weight: 3,
+              fillColor: color,
+              fillOpacity: 1,
+            }}
+          >
+            <Popup>
+              <div style={{ minWidth: 180 }}>
+                <strong style={{ color }}>{stopIndex + 1}. {stop.name}</strong>
+                <div style={{ fontSize: 12, marginTop: 4 }}>
+                  {stop.district_label || stop.area_label || "-"}
+                </div>
+              </div>
+            </Popup>
+          </CircleMarker>
+        ))}
+      </Fragment>
+    );
+  });
+}
+
 // Editable area polygons with draggable vertices
 function AreaPolygons({ polygons, onEdit, editingAreaId }) {
   const map = useMap();
@@ -314,6 +391,7 @@ export default function LeafletMap({
   depot,
   onPolygonCreated,
   areaPolygons = [],
+  routes = [],
   drawEnabled = false,
   editingAreaId = null,
   onEditArea = null,
@@ -347,7 +425,9 @@ export default function LeafletMap({
       <DrawControl onPolygonCreated={onPolygonCreated} enabled={drawEnabled} />
       <OverviewFitter polygons={areaPolygons} editingAreaId={editingAreaId} />
       <EditAreaFitter editingAreaId={editingAreaId} polygons={areaPolygons} />
+      <RouteFitter routes={routes} />
       <AreaPolygons polygons={areaPolygons} editingAreaId={editingAreaId} onEdit={onEditArea} />
+      <RouteLayers routes={routes} />
 
       {depot && (
         <Marker position={[depot.lat, depot.lng]} icon={depotIcon}>
