@@ -54,7 +54,6 @@ def fetch_customers(database_url: str, city: str | None = None, limit: int | Non
         "TRIM(long) ~ '^-?[0-9]+(\\.[0-9]+)?$'",
         "TRIM(lat) <> '0'",
         "TRIM(long) <> '0'",
-        "status = '2'",
     ]
     if city:
         escaped_city = city.replace("'", "''")

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
@@ -158,6 +158,30 @@ function EditAreaFitter({ editingAreaId, polygons }) {
   return null;
 }
 
+function OverviewFitter({ polygons, editingAreaId }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (editingAreaId || polygons.length === 0) return;
+
+    const bounds = [];
+    polygons.forEach((poly) => {
+      if (!Array.isArray(poly.polygon)) return;
+      poly.polygon.forEach((point) => {
+        if (typeof point?.lat === "number" && typeof point?.lng === "number") {
+          bounds.push([point.lat, point.lng]);
+        }
+      });
+    });
+
+    if (bounds.length >= 3) {
+      map.fitBounds(bounds, { padding: [80, 80], maxZoom: 11 });
+    }
+  }, [map, polygons, editingAreaId]);
+
+  return null;
+}
+
 // Editable area polygons with draggable vertices
 function AreaPolygons({ polygons, onEdit, editingAreaId }) {
   const map = useMap();
@@ -193,9 +217,9 @@ function AreaPolygons({ polygons, onEdit, editingAreaId }) {
       const latlngs = poly.polygon.map((p) => [p.lat, p.lng]);
       const polygonLayer = L.polygon(latlngs, {
         color: poly.color || "#1a73e8",
-        weight: isEditing ? 3 : 2,
-        fillOpacity: isEditing ? 0.15 : 0.08,
-        dashArray: isEditing ? null : "5, 5",
+        weight: isEditing ? 2.5 : 2,
+        fillOpacity: isEditing ? 0.14 : 0.06,
+        dashArray: isEditing ? null : "6, 6",
       }).addTo(map);
 
       polygonLayer.bindPopup(`<b>${poly.name}</b><br>${poly.polygon.length} titik`);
@@ -293,17 +317,35 @@ export default function LeafletMap({
   drawEnabled = false,
   editingAreaId = null,
   onEditArea = null,
+  theme = "light",
 }) {
   const center = depot?.lat && depot?.lng ? [depot.lat, depot.lng] : [-7.2575, 112.7521];
+  const tileUrl =
+    theme === "dark"
+      ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+      : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+  const attribution =
+    theme === "dark"
+      ? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
   return (
-    <MapContainer center={center} zoom={12} style={{ width: "100%", height: "100%" }} scrollWheelZoom={true}>
+    <MapContainer
+      center={center}
+      zoom={9}
+      zoomControl={false}
+      className="route-map"
+      style={{ width: "100%", height: "100%" }}
+      scrollWheelZoom={true}
+    >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution={attribution}
+        url={tileUrl}
       />
+      <ZoomControl position="topleft" />
 
       <DrawControl onPolygonCreated={onPolygonCreated} enabled={drawEnabled} />
+      <OverviewFitter polygons={areaPolygons} editingAreaId={editingAreaId} />
       <EditAreaFitter editingAreaId={editingAreaId} polygons={areaPolygons} />
       <AreaPolygons polygons={areaPolygons} editingAreaId={editingAreaId} onEdit={onEditArea} />
 

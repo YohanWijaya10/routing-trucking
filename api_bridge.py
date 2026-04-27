@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import datetime
 import json
 import os
 import sys
@@ -152,6 +153,160 @@ def main() -> int:
             area['store_count'] = count
         
         print(json.dumps({"areas": areas}))
+        return 0
+
+    if command == "get-area-detail":
+        database_url = payload.get("database_url") or os.environ.get("DATABASE_URL")
+        area_id = int(payload.get("id"))
+        
+        # 1. Fetch area polygon
+        sql = f"""SELECT id, name, color, polygon FROM \"AreaPolygon\" WHERE id = {area_id}"""
+        import subprocess
+        proc = subprocess.run(
+            ["psql", database_url, "-At", "-F", "\t", "-c", sql],
+            capture_output=True, text=True, check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.strip())
+        
+        area = None
+        for line in proc.stdout.splitlines():
+            if not line.strip(): continue
+            parts = line.split("\t")
+            if len(parts) >= 4:
+                area = {
+                    "id": int(parts[0]),
+                    "name": parts[1],
+                    "color": parts[2],
+                    "polygon": json.loads(parts[3]) if parts[3] else [],
+                }
+        
+        if not area or len(area["polygon"]) < 3:
+            print(json.dumps({"area": area, "customers": [], "transactions": []}))
+            return 0
+        
+        poly = area["polygon"]
+        
+        # 2. Fetch all active customers
+        cust_sql = """SELECT id_customer, nama_toko, COALESCE(alamat,''), COALESCE(kecamatan,''), TRIM(lat), TRIM(long), COALESCE(kota,'') FROM \"Customer\" WHERE status = '2' AND lat IS NOT NULL AND long IS NOT NULL"""
+        cust_proc = subprocess.run(
+            ["psql", database_url, "-At", "-F", "\t", "-c", cust_sql],
+            capture_output=True, text=True, check=False,
+        )
+        
+        customers = []
+        customer_ids = []
+        for line in cust_proc.stdout.splitlines():
+            if not line.strip(): continue
+            parts = line.split("\t")
+            if len(parts) >= 5:
+                try:
+                    lat = float(parts[4])
+                    lng = float(parts[5])
+                except:
+                    continue
+                # point-in-polygon using ray casting
+                inside = False
+                n = len(poly)
+                j = n - 1
+                for i in range(n):
+                    pi = poly[i]
+                    pj = poly[j]
+                    if ((pi['lng'] > lng) != (pj['lng'] > lng)) and \
+                       (lat < (pj['lat'] - pi['lat']) * (lng - pi['lng']) / (pj['lng'] - pi['lng'] + 1e-10) + pi['lat']):
+                        inside = not inside
+                    j = i
+                if inside:
+                    cid = parts[0]
+                    customers.append({
+                        "id_customer": cid,
+                        "nama_toko": parts[1],
+                        "alamat": parts[2],
+                        "kecamatan": parts[3],
+                        "lat": lat,
+                        "lng": lng,
+                        "kota": parts[6] if len(parts) > 6 else "",
+                    })
+                    customer_ids.append(cid)
+        
+        transactions_summary = []
+        recent_transactions = []
+        
+        if customer_ids:
+            # 3. Fetch transaction summary per customer
+            # Build safe IN clause - all ids are strings from DB
+            safe_ids = ",".join("'" + c.replace("'", "''") + "'" for c in customer_ids)
+            
+            sum_sql = f"""
+                SELECT id_customer, COUNT(*) as cnt, COALESCE(SUM(total), 0) as total_nilai, MAX(tanggal) as last_date
+                FROM \"Transaksi\"
+                WHERE id_customer IN ({safe_ids})
+                GROUP BY id_customer
+            """
+            sum_proc = subprocess.run(
+                ["psql", database_url, "-At", "-F", "\t", "-c", sum_sql],
+                capture_output=True, text=True, check=False,
+            )
+            summary_map = {}
+            for line in sum_proc.stdout.splitlines():
+                if not line.strip(): continue
+                parts = line.split("\t")
+                if len(parts) >= 4:
+                    summary_map[parts[0]] = {
+                        "count": int(parts[1]),
+                        "total": float(parts[2]) if parts[2] else 0,
+                        "last_date": parts[3] if parts[3] else None,
+                    }
+            
+            # 4. Fetch recent transactions (top 100 newest overall)
+            trans_sql = f"""
+                SELECT idso, id_customer, nama_toko, tanggal::date, total, statusorder, metode_pembayaran, nama_sales
+                FROM \"Transaksi\"
+                WHERE id_customer IN ({safe_ids})
+                ORDER BY tanggal DESC
+                LIMIT 100
+            """
+            trans_proc = subprocess.run(
+                ["psql", database_url, "-At", "-F", "\t", "-c", trans_sql],
+                capture_output=True, text=True, check=False,
+            )
+            for line in trans_proc.stdout.splitlines():
+                if not line.strip(): continue
+                parts = line.split("\t")
+                if len(parts) >= 5:
+                    recent_transactions.append({
+                        "idso": parts[0] or "-",
+                        "id_customer": parts[1],
+                        "nama_toko": parts[2],
+                        "tanggal": parts[3],
+                        "total": float(parts[4]) if parts[4] else 0,
+                        "statusorder": parts[5] or "-",
+                        "metode_pembayaran": parts[6] or "-",
+                        "nama_sales": parts[7] or "-",
+                    })
+            
+            # Only keep customers that have transactions
+            customers_with_tx = []
+            for c in customers:
+                s = summary_map.get(c["id_customer"])
+                if s and s["count"] > 0:
+                    c["transaksi_count"] = s["count"]
+                    c["transaksi_total"] = s["total"]
+                    c["transaksi_last_date"] = s["last_date"]
+                    customers_with_tx.append(c)
+            customers = customers_with_tx
+        
+        # Sort customers by transaction total desc
+        customers.sort(key=lambda x: x.get("transaksi_total", 0), reverse=True)
+        
+        print(json.dumps({
+            "area": area,
+            "customers": customers,
+            "transactions": recent_transactions,
+            "total_customers": len(customers),
+            "total_transactions": sum(c.get("transaksi_count", 0) for c in customers),
+            "grand_total": sum(c.get("transaksi_total", 0) for c in customers),
+        }))
         return 0
 
     if command == "save-area":
