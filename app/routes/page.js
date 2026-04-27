@@ -138,6 +138,7 @@ export default function RoutesPage() {
   const [routePlan, setRoutePlan] = useState(null);
   const [routeError, setRouteError] = useState("");
   const [areaSearch, setAreaSearch] = useState("");
+  const [departureTime, setDepartureTime] = useState("08:00");
 
   // Load ALL saved areas from DB (all cities)
   const loadAreas = useCallback(async () => {
@@ -394,6 +395,30 @@ export default function RoutesPage() {
       if (!res.ok) {
         throw new Error(data.error || "Gagal generate rute");
       }
+
+      // Calculate ETA for each stop based on departure time
+      if (data.routes && data.routes.length > 0 && departureTime) {
+        const [hours, minutes] = departureTime.split(':').map(Number);
+        let currentMinutes = hours * 60 + minutes;
+
+        data.routes.forEach((route) => {
+          if (route.stops && route.stops.length > 0) {
+            route.stops.forEach((stop) => {
+              // Add travel time from previous location (depot or previous stop)
+              currentMinutes += (stop.time_from_prev_min || 0);
+
+              // Set ETA for arrival at this stop
+              const etaHours = Math.floor(currentMinutes / 60) % 24;
+              const etaMinutes = Math.floor(currentMinutes % 60);
+              stop.eta = `${String(etaHours).padStart(2, '0')}:${String(etaMinutes).padStart(2, '0')}`;
+
+              // Add service time at this stop for next calculation
+              currentMinutes += (stop.service_minutes || 0);
+            });
+          }
+        });
+      }
+
       setRoutePlan(data);
       setDetailTab("route");
     } catch (error) {
@@ -401,7 +426,7 @@ export default function RoutesPage() {
     } finally {
       setRoutePlanning(false);
     }
-  }, [areaDetail?.customers, routeTruckOptions, routeTruckId, selectedArea]);
+  }, [areaDetail?.customers, routeTruckOptions, routeTruckId, selectedArea, departureTime]);
 
   const isAreaRoute = pathname === "/routes" || pathname === "/";
 
@@ -618,6 +643,17 @@ export default function RoutesPage() {
                                 </option>
                               ))}
                             </select>
+                            <div>
+                              <label className="mb-2 block text-[11px] font-semibold text-slate-600">
+                                Waktu Keberangkatan
+                              </label>
+                              <input
+                                type="time"
+                                value={departureTime}
+                                onChange={(e) => setDepartureTime(e.target.value)}
+                                className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100"
+                              />
+                            </div>
                             <button
                               onClick={generateAreaRoute}
                               disabled={routePlanning || routeTruckOptions.length === 0}
@@ -661,17 +697,63 @@ export default function RoutesPage() {
                                 <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Urutan Stop</div>
                               </div>
                               <div className="divide-y divide-slate-100">
-                                {(routePlan.routes?.[0]?.stops || []).map((stop, index) => (
-                                  <div key={`${stop.id}-${index}`} className="flex items-start gap-3 px-4 py-3">
-                                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-500 text-[11px] font-bold text-white">
-                                      {index + 1}
+                                {(routePlan.routes?.[0]?.stops || []).map((stop, index) => {
+                                  const stops = routePlan.routes?.[0]?.stops || [];
+                                  const nextStop = stops[index + 1];
+                                  const segmentDistance = stop.distance_to_next_km;
+                                  const segmentTime = stop.time_to_next_min;
+
+                                  return (
+                                    <div key={`${stop.id}-${index}`}>
+                                      <div className="flex items-start gap-3 px-4 py-3">
+                                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-500 text-[11px] font-bold text-white">
+                                          {index + 1}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex items-center justify-between gap-2">
+                                            <div className="truncate text-[12px] font-semibold text-slate-800">{stop.name}</div>
+                                            {stop.eta && (
+                                              <div className="shrink-0 rounded-lg bg-primary-50 px-2 py-1 text-[10px] font-bold text-primary-600">
+                                                {stop.eta}
+                                              </div>
+                                            )}
+                                          </div>
+                                          <div className="mt-0.5 text-[10px] text-slate-500">{stop.district_label || stop.area_label || "-"}</div>
+                                        </div>
+                                      </div>
+                                      {nextStop && (segmentDistance || segmentTime) && (
+                                        <div className="flex items-center gap-2 px-4 pb-3 pl-14">
+                                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400">
+                                            <path d="M12 5v14" />
+                                            <path d="m19 12-7 7-7-7" />
+                                          </svg>
+                                          <div className="flex items-center gap-3 text-[10px] text-slate-500">
+                                            {segmentDistance && (
+                                              <span className="flex items-center gap-1">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+                                                  <path d="M10 17H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8v11Z" />
+                                                  <path d="M10 9h5l3 3v3a2 2 0 0 1-2 2h-1" />
+                                                  <circle cx="7.5" cy="17.5" r="1.5" />
+                                                  <circle cx="16.5" cy="17.5" r="1.5" />
+                                                </svg>
+                                                {segmentDistance} km
+                                              </span>
+                                            )}
+                                            {segmentTime && (
+                                              <span className="flex items-center gap-1">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+                                                  <circle cx="12" cy="12" r="10" />
+                                                  <polyline points="12 6 12 12 16 14" />
+                                                </svg>
+                                                {segmentTime} mnt
+                                              </span>
+                                            )}
+                                          </div>
+                                        </div>
+                                      )}
                                     </div>
-                                    <div className="min-w-0 flex-1">
-                                      <div className="truncate text-[12px] font-semibold text-slate-800">{stop.name}</div>
-                                      <div className="mt-0.5 text-[10px] text-slate-500">{stop.district_label || stop.area_label || "-"}</div>
-                                    </div>
-                                  </div>
-                                ))}
+                                  );
+                                })}
                               </div>
                             </div>
                           </>
@@ -862,10 +944,38 @@ export default function RoutesPage() {
         <div className="relative flex-1 overflow-hidden bg-[#dceefe]">
           <div className="pointer-events-none absolute inset-0 z-[400] bg-[radial-gradient(circle_at_left_center,rgba(255,255,255,0.45),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.26),rgba(255,255,255,0.08))]" />
           <div className="pointer-events-none absolute left-8 top-8 z-[401] hidden rounded-2xl border border-white/60 bg-white/75 px-4 py-3 shadow-[0_24px_60px_rgba(148,163,184,0.18)] backdrop-blur md:block">
-            <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">Area Mapping</div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+              {routePlan ? "Rute Pengiriman" : "Area Mapping"}
+            </div>
             <div className="mt-1 text-sm font-semibold text-slate-900">
               {routePlan ? `${routePlan.summary?.orders_planned || 0} stop rute` : `${orders.length.toLocaleString("id-ID")} toko aktif`}
             </div>
+            {routePlan && routePlan.summary && (
+              <div className="mt-3 flex items-center gap-4 border-t border-slate-200 pt-3">
+                <div className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-500">
+                    <path d="M10 17H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8v11Z" />
+                    <path d="M10 9h5l3 3v3a2 2 0 0 1-2 2h-1" />
+                    <circle cx="7.5" cy="17.5" r="1.5" />
+                    <circle cx="16.5" cy="17.5" r="1.5" />
+                  </svg>
+                  <div>
+                    <div className="text-[10px] text-slate-500">Jarak</div>
+                    <div className="text-sm font-bold text-slate-900">{routePlan.summary.total_distance_km || 0} km</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary-500">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <div>
+                    <div className="text-[10px] text-slate-500">Waktu</div>
+                    <div className="text-sm font-bold text-slate-900">{routePlan.summary.total_duration_minutes || 0} mnt</div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           <LeafletMap
             depot={{ name: "Gudang", lat: -7.2575, lng: 112.7521 }}

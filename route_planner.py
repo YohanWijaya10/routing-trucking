@@ -836,6 +836,7 @@ def solve_with_ortools(
         route_stops: List[Dict[str, Any]] = []
         path = [depot.name]
 
+        prev_node = 0  # Start from depot
         while not routing.IsEnd(index):
             node = manager.IndexToNode(index)
             next_index = solution.Value(routing.NextVar(index))
@@ -846,6 +847,15 @@ def solve_with_ortools(
                 route_load_kg += order.demand_kg
                 stop_ids.append(order.id)
                 stop_names.append(order.name)
+
+                # Calculate distance and time FROM previous location TO this stop
+                travel_from_prev_m = distances[prev_node][node]
+                travel_from_prev_s = durations[prev_node][node]
+
+                # Calculate distance and time to next stop
+                segment_distance_m = distances[node][next_node]
+                segment_duration_s = durations[node][next_node]
+
                 route_stops.append(
                     {
                         "id": order.id,
@@ -854,8 +864,13 @@ def solve_with_ortools(
                         "lng": order.lng,
                         "demand_kg": order.demand_kg,
                         "service_minutes": order.service_minutes,
+                        "distance_to_next_km": round(segment_distance_m / 1000, 2),
+                        "time_to_next_min": round(segment_duration_s / 60, 1),
+                        "distance_from_prev_km": round(travel_from_prev_m / 1000, 2),
+                        "time_from_prev_min": round(travel_from_prev_s / 60, 1),
                     }
                 )
+                prev_node = node
 
             if not routing.IsEnd(next_index):
                 path.append(orders[next_node - 1].name)
@@ -1047,11 +1062,22 @@ def solve_zone_greedy(
             if src != 0:
                 route_duration_s += orders[src - 1].service_minutes * 60
 
-        for node_idx in ordered_stop_nodes:
+        for idx, node_idx in enumerate(ordered_stop_nodes):
             order = stop_lookup[node_idx]
             route_load_kg += order.demand_kg
             stop_ids.append(order.id)
             stop_names.append(order.name)
+
+            # Calculate distance and time FROM previous location TO this stop
+            prev_node = ordered_stop_nodes[idx - 1] if idx > 0 else 0
+            travel_from_prev_m = distances[prev_node][node_idx]
+            travel_from_prev_s = durations[prev_node][node_idx]
+
+            # Calculate distance and time to next stop
+            next_node = ordered_stop_nodes[idx + 1] if idx + 1 < len(ordered_stop_nodes) else 0
+            segment_distance_m = distances[node_idx][next_node]
+            segment_duration_s = durations[node_idx][next_node]
+
             route_stops.append(
                 {
                     "id": order.id,
@@ -1062,6 +1088,10 @@ def solve_zone_greedy(
                     "service_minutes": order.service_minutes,
                     "district_label": order.district_label,
                     "area_label": order.area_label,
+                    "distance_to_next_km": round(segment_distance_m / 1000, 2),
+                    "time_to_next_min": round(segment_duration_s / 60, 1),
+                    "distance_from_prev_km": round(travel_from_prev_m / 1000, 2),
+                    "time_from_prev_min": round(travel_from_prev_s / 60, 1),
                 }
             )
             path.append(order.name)

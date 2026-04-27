@@ -211,6 +211,53 @@ function RouteFitter({ routes }) {
   return null;
 }
 
+// Create numbered stop marker icon
+function createStopMarkerIcon(number, color) {
+  return L.divIcon({
+    className: "stop-marker",
+    html: `
+      <div style="
+        width: 32px; height: 32px;
+        background: ${color};
+        border: 3px solid white;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 13px;
+        color: white;
+      ">${number}</div>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16],
+  });
+}
+
+// Create time label marker for segments
+function createTimeLabelIcon(timeText) {
+  return L.divIcon({
+    className: "time-label-marker",
+    html: `
+      <div style="
+        padding: 4px 8px;
+        background: rgba(26, 115, 232, 0.95);
+        color: white;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        border: 2px solid white;
+      ">${timeText}</div>
+    `,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0],
+  });
+}
+
 function RouteLayers({ routes = [] }) {
   const colors = ["#1a73e8", "#ea4335", "#34a853", "#9334e6", "#ff6d00", "#00bcd4"];
 
@@ -232,28 +279,43 @@ function RouteLayers({ routes = [] }) {
           />
         )}
 
-        {stops.map((stop, stopIndex) => (
-          <CircleMarker
-            key={`${routeIndex}-${stop.id || stopIndex}`}
-            center={[stop.lat, stop.lng]}
-            radius={8}
-            pathOptions={{
-              color: "#ffffff",
-              weight: 3,
-              fillColor: color,
-              fillOpacity: 1,
-            }}
-          >
-            <Popup>
-              <div style={{ minWidth: 180 }}>
-                <strong style={{ color }}>{stopIndex + 1}. {stop.name}</strong>
-                <div style={{ fontSize: 12, marginTop: 4 }}>
-                  {stop.district_label || stop.area_label || "-"}
-                </div>
-              </div>
-            </Popup>
-          </CircleMarker>
-        ))}
+        {stops.map((stop, stopIndex) => {
+          const nextStop = stops[stopIndex + 1];
+          const timeToNext = stop.time_to_next_min;
+
+          // Calculate midpoint for time label
+          let midLat, midLng;
+          if (nextStop && timeToNext > 0) {
+            midLat = (stop.lat + nextStop.lat) / 2;
+            midLng = (stop.lng + nextStop.lng) / 2;
+          }
+
+          return (
+            <Fragment key={`${routeIndex}-${stop.id || stopIndex}`}>
+              <Marker
+                position={[stop.lat, stop.lng]}
+                icon={createStopMarkerIcon(stopIndex + 1, color)}
+              >
+                <Popup>
+                  <div style={{ minWidth: 180 }}>
+                    <strong style={{ color }}>{stopIndex + 1}. {stop.name}</strong>
+                    <div style={{ fontSize: 12, marginTop: 4 }}>
+                      {stop.district_label || stop.area_label || "-"}
+                    </div>
+                  </div>
+                </Popup>
+              </Marker>
+
+              {nextStop && timeToNext > 0 && midLat && midLng && (
+                <Marker
+                  position={[midLat, midLng]}
+                  icon={createTimeLabelIcon(`${timeToNext} mnt`)}
+                  interactive={false}
+                />
+              )}
+            </Fragment>
+          );
+        })}
       </Fragment>
     );
   });
