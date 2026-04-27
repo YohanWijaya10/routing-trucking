@@ -1,243 +1,386 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const DEFAULT_TRUCKS = [
-  { id: "TRUCK-1", name: "Isuzu Elf", capacity_kg: 2500, plat: "L 1234 AB", driver: "Budi", phone: "08123456789", assignedArea: "area-1" },
-  { id: "TRUCK-2", name: "Mitsubishi Canter", capacity_kg: 3000, plat: "L 5678 CD", driver: "Andi", phone: "08198765432", assignedArea: "area-2" },
-  { id: "TRUCK-3", name: "Hino Dutro", capacity_kg: 3500, plat: "L 9012 EF", driver: "Siti", phone: "08234567890", assignedArea: "area-3" },
-  { id: "TRUCK-4", name: "Toyota Dyna", capacity_kg: 4000, plat: "L 3456 GH", driver: "Rudi", phone: "08345678901", assignedArea: null },
-  { id: "TRUCK-5", name: "Isuzu Giga", capacity_kg: 5000, plat: "L 7890 IJ", driver: "Dewi", phone: "08456789012", assignedArea: null },
+const TRUCK_COLORS = [
+  "#1a73e8", "#ea4335", "#fbbc04", "#34a853",
+  "#9334e6", "#ff6d00", "#00bcd4", "#e91e63",
 ];
 
-const DEFAULT_AREAS = [
-  { id: "area-1", name: "Surabaya Barat", color: "#1a73e8" },
-  { id: "area-2", name: "Surabaya Selatan", color: "#ea4335" },
-  { id: "area-3", name: "Surabaya Timur", color: "#fbbc04" },
-  { id: "area-4", name: "Surabaya Pusat", color: "#34a853" },
-  { id: "area-5", name: "Surabaya Utara", color: "#9334e6" },
-  { id: "area-6", name: "Gresik", color: "#ff6d00" },
-  { id: "area-7", name: "Sidoarjo", color: "#00bcd4" },
-  { id: "area-8", name: "Jombang", color: "#e91e63" },
-];
+function NavLink({ href, label, activePath }) {
+  const isActive = activePath === href;
+  return (
+    <Link
+      href={href}
+      className={`text-sm px-4 py-2 rounded-lg font-medium transition-colors ${
+        isActive
+          ? "bg-primary-500 text-white shadow-sm"
+          : "text-surface-600 hover:bg-surface-100 hover:text-surface-900"
+      }`}
+    >
+      {label}
+    </Link>
+  );
+}
+
+function Spinner({ className = "" }) {
+  return (
+    <div className={`inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin ${className}`} />
+  );
+}
 
 export default function TrucksPage() {
-  const [trucks, setTrucks] = useState(DEFAULT_TRUCKS);
-  const [areas] = useState(DEFAULT_AREAS);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newTruck, setNewTruck] = useState({
+  const pathname = usePathname();
+  const [trucks, setTrucks] = useState([]);
+  const [areas, setAreas] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [editingTruck, setEditingTruck] = useState(null);
+
+  const [form, setForm] = useState({
     name: "",
+    plate_number: "",
     capacity_kg: "",
-    plat: "",
-    driver: "",
-    phone: "",
-    assignedArea: "",
+    color: TRUCK_COLORS[0],
+    area_ids: [],
   });
 
-  const addTruck = () => {
-    if (!newTruck.name.trim() || !newTruck.capacity_kg) return;
-    const truck = {
-      id: `TRUCK-${trucks.length + 1}`,
-      ...newTruck,
-      capacity_kg: Number(newTruck.capacity_kg),
-    };
-    setTrucks([...trucks, truck]);
-    setNewTruck({ name: "", capacity_kg: "", plat: "", driver: "", phone: "", assignedArea: "" });
-    setShowAddForm(false);
+  const loadTrucks = useCallback(async () => {
+    try {
+      const res = await fetch("/api/trucks");
+      const data = await res.json();
+      if (data.trucks) setTrucks(data.trucks);
+    } catch (e) {
+      console.error("Failed to load trucks:", e);
+    }
+  }, []);
+
+  const loadAreas = useCallback(async () => {
+    try {
+      const res = await fetch("/api/areas?kota=");
+      const data = await res.json();
+      if (data.areas) setAreas(data.areas);
+    } catch (e) {
+      console.error("Failed to load areas:", e);
+    }
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    Promise.all([loadTrucks(), loadAreas()]).then(() => setLoading(false));
+  }, [loadTrucks, loadAreas]);
+
+  const resetForm = () => {
+    setForm({ name: "", plate_number: "", capacity_kg: "", color: TRUCK_COLORS[0], area_ids: [] });
+    setEditingTruck(null);
+    setShowForm(false);
   };
 
-  const deleteTruck = (id) => {
-    setTrucks(trucks.filter((t) => t.id !== id));
+  const openCreate = () => {
+    resetForm();
+    setShowForm(true);
   };
 
-  const assignArea = (truckId, areaId) => {
-    setTrucks(trucks.map((t) => (t.id === truckId ? { ...t, assignedArea: areaId || null } : t)));
+  const openEdit = (truck) => {
+    setEditingTruck(truck);
+    setForm({
+      name: truck.name,
+      plate_number: truck.plate_number || "",
+      capacity_kg: truck.capacity_kg || "",
+      color: truck.color || TRUCK_COLORS[0],
+      area_ids: truck.area_ids || [],
+    });
+    setShowForm(true);
   };
 
-  const getAreaName = (areaId) => {
-    const area = areas.find((a) => a.id === areaId);
-    return area ? area.name : "Belum di-assign";
+  const saveTruck = async () => {
+    if (!form.name.trim()) {
+      alert("Nama truck wajib diisi!");
+      return;
+    }
+    setSaving(true);
+    try {
+      const payload = {
+        name: form.name.trim(),
+        plate_number: form.plate_number.trim(),
+        capacity_kg: parseInt(form.capacity_kg) || 0,
+        color: form.color,
+        area_ids: form.area_ids,
+      };
+      const res = await fetch("/api/trucks", {
+        method: editingTruck ? "PATCH" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingTruck ? { ...payload, id: editingTruck.id } : payload),
+      });
+      await res.json();
+      await loadTrucks();
+      resetForm();
+    } catch (e) {
+      console.error("Failed to save truck:", e);
+      alert("Gagal simpan truck");
+    }
+    setSaving(false);
   };
 
-  const getAreaColor = (areaId) => {
-    const area = areas.find((a) => a.id === areaId);
-    return area ? area.color : "#9aa0a6";
+  const deleteTruck = async (id) => {
+    if (!confirm("Hapus truck ini?")) return;
+    try {
+      await fetch(`/api/trucks?id=${id}`, { method: "DELETE" });
+      await loadTrucks();
+    } catch (e) {
+      console.error("Failed to delete truck:", e);
+    }
+  };
+
+  const toggleArea = (areaId) => {
+    setForm((prev) => ({
+      ...prev,
+      area_ids: prev.area_ids.includes(areaId)
+        ? prev.area_ids.filter((id) => id !== areaId)
+        : [...prev.area_ids, areaId],
+    }));
+  };
+
+  // Get area names for a truck
+  const getAreaNames = (areaIds) => {
+    return areaIds
+      .map((id) => areas.find((a) => a.id === id)?.name)
+      .filter(Boolean);
   };
 
   return (
-    <div className="min-h-screen bg-surface-50">
-      <header className="h-14 bg-white border-b border-surface-200 flex items-center justify-between px-4">
+    <div className="h-screen flex flex-col bg-surface-50 overflow-hidden">
+      {/* Header */}
+      <header className="h-16 bg-white border-b border-surface-200 flex items-center justify-between px-6 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
-            <span className="text-white text-lg">🚛</span>
+          <div className="w-9 h-9 bg-primary-500 rounded-lg flex items-center justify-center shadow-sm">
+            <span className="text-white text-xs font-bold tracking-wider">TM</span>
           </div>
           <div>
             <h1 className="text-sm font-bold text-surface-900">Truck Management</h1>
-            <p className="text-[10px] text-surface-500">Kelola truck dan assign ke area</p>
+            <p className="text-[11px] text-surface-500">{trucks.length} truck terdaftar</p>
           </div>
         </div>
-        <button onClick={() => setShowAddForm(!showAddForm)} className="btn-primary text-xs py-1.5 px-3">
-          {showAddForm ? "Batal" : "+ Tambah Truck"}
-        </button>
+        <div className="flex items-center gap-1">
+          <NavLink href="/routes" label="Area" activePath={pathname} />
+          <NavLink href="/trucks" label="Trucks" activePath={pathname} />
+          {loading && (
+            <span className="ml-2 text-xs text-surface-500 flex items-center gap-1.5">
+              <Spinner />
+            </span>
+          )}
+        </div>
       </header>
 
-      <div className="p-4 max-w-6xl mx-auto">
-        {/* Stats */}
-        <div className="grid grid-cols-4 gap-3 mb-6">
-          <div className="floating-panel p-3">
-            <p className="text-[10px] text-surface-500">Total Truck</p>
-            <p className="text-xl font-bold text-surface-800">{trucks.length}</p>
-          </div>
-          <div className="floating-panel p-3">
-            <p className="text-[10px] text-surface-500">Total Kapasitas</p>
-            <p className="text-xl font-bold text-surface-800">
-              {trucks.reduce((sum, t) => sum + t.capacity_kg, 0).toLocaleString()} kg
-            </p>
-          </div>
-          <div className="floating-panel p-3">
-            <p className="text-[10px] text-surface-500">Sudah Assign</p>
-            <p className="text-xl font-bold text-primary-600">
-              {trucks.filter((t) => t.assignedArea).length}
-            </p>
-          </div>
-          <div className="floating-panel p-3">
-            <p className="text-[10px] text-surface-500">Belum Assign</p>
-            <p className="text-xl font-bold text-red-500">
-              {trucks.filter((t) => !t.assignedArea).length}
-            </p>
-          </div>
-        </div>
-
-        {/* Add Form */}
-        {showAddForm && (
-          <div className="floating-panel p-4 mb-4">
-            <h3 className="text-sm font-bold text-surface-800 mb-3">Tambah Truck Baru</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              <div>
-                <label className="text-[11px] text-surface-500 font-medium">Nama Truck</label>
-                <input
-                  type="text"
-                  value={newTruck.name}
-                  onChange={(e) => setNewTruck({ ...newTruck, name: e.target.value })}
-                  placeholder="Isuzu Elf"
-                  className="w-full text-sm px-3 py-2 border border-surface-300 rounded-lg outline-none focus:border-primary-400 mt-1"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] text-surface-500 font-medium">Kapasitas (kg)</label>
-                <input
-                  type="number"
-                  value={newTruck.capacity_kg}
-                  onChange={(e) => setNewTruck({ ...newTruck, capacity_kg: e.target.value })}
-                  placeholder="2500"
-                  className="w-full text-sm px-3 py-2 border border-surface-300 rounded-lg outline-none focus:border-primary-400 mt-1"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] text-surface-500 font-medium">Plat Nomor</label>
-                <input
-                  type="text"
-                  value={newTruck.plat}
-                  onChange={(e) => setNewTruck({ ...newTruck, plat: e.target.value })}
-                  placeholder="L 1234 AB"
-                  className="w-full text-sm px-3 py-2 border border-surface-300 rounded-lg outline-none focus:border-primary-400 mt-1"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] text-surface-500 font-medium">Nama Driver</label>
-                <input
-                  type="text"
-                  value={newTruck.driver}
-                  onChange={(e) => setNewTruck({ ...newTruck, driver: e.target.value })}
-                  placeholder="Budi"
-                  className="w-full text-sm px-3 py-2 border border-surface-300 rounded-lg outline-none focus:border-primary-400 mt-1"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] text-surface-500 font-medium">No HP Driver</label>
-                <input
-                  type="text"
-                  value={newTruck.phone}
-                  onChange={(e) => setNewTruck({ ...newTruck, phone: e.target.value })}
-                  placeholder="08123456789"
-                  className="w-full text-sm px-3 py-2 border border-surface-300 rounded-lg outline-none focus:border-primary-400 mt-1"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] text-surface-500 font-medium">Area Default</label>
-                <select
-                  value={newTruck.assignedArea}
-                  onChange={(e) => setNewTruck({ ...newTruck, assignedArea: e.target.value })}
-                  className="w-full text-sm px-3 py-2 border border-surface-300 rounded-lg outline-none focus:border-primary-400 mt-1"
-                >
-                  <option value="">Pilih Area (opsional)</option>
-                  {areas.map((a) => (
-                    <option key={a.id} value={a.id}>{a.name}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <button onClick={addTruck} className="btn-primary text-sm py-2 px-4 mt-3">
-              Simpan Truck
+      <div className="flex-1 flex overflow-hidden">
+        {/* Sidebar - Truck List */}
+        <aside className="w-96 bg-white border-r border-surface-200 flex flex-col shrink-0 overflow-hidden">
+          <div className="p-4 border-b border-surface-200 bg-surface-50">
+            <button
+              onClick={openCreate}
+              className="w-full text-sm px-4 py-2.5 rounded-lg bg-primary-500 text-white hover:bg-primary-600 font-medium shadow-sm transition-colors"
+            >
+              Tambah Truck
             </button>
           </div>
-        )}
 
-        {/* Truck List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {trucks.map((truck) => (
-            <div key={truck.id} className="floating-panel p-4">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-surface-100 rounded-lg flex items-center justify-center text-xl">
-                    🚛
+          <div className="flex-1 overflow-y-auto">
+            <div className="px-4 py-3 border-b border-surface-200 bg-white">
+              <h3 className="text-xs font-bold text-surface-700 uppercase tracking-wider">
+                Daftar Truck ({trucks.length})
+              </h3>
+            </div>
+            <div className="divide-y divide-surface-100">
+              {trucks.map((truck) => {
+                const areaNames = getAreaNames(truck.area_ids || []);
+                return (
+                  <div 
+                    key={truck.id} 
+                    className={`p-4 transition-colors cursor-pointer ${showForm && editingTruck?.id === truck.id ? "bg-primary-50 border-l-4 border-l-primary-500" : "hover:bg-surface-50 border-l-4 border-l-transparent"}`}
+                    onClick={() => openEdit(truck)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm" style={{ background: truck.color }} />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-semibold text-surface-800 truncate">{truck.name}</div>
+                        <div className="text-[11px] text-surface-500 mt-0.5">
+                          {truck.plate_number && (
+                            <span className="inline-block mr-2">{truck.plate_number}</span>
+                          )}
+                          {truck.capacity_kg > 0 && (
+                            <span className="inline-block mr-2">{truck.capacity_kg.toLocaleString()} kg</span>
+                          )}
+                          {areaNames.length > 0 ? (
+                            <span className="text-primary-600 font-medium">{areaNames.join(", ")}</span>
+                          ) : (
+                            <span className="text-amber-500">Belum ada area</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); openEdit(truck); }}
+                          className="text-[11px] text-surface-400 hover:text-amber-600 hover:bg-amber-50 px-2 py-1 rounded-md font-medium transition-colors"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); deleteTruck(truck.id); }}
+                          className="text-[11px] text-surface-400 hover:text-red-600 hover:bg-red-50 px-2 py-1 rounded-md font-medium transition-colors"
+                        >
+                          Hapus
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+              {trucks.length === 0 && (
+                <div className="p-6 text-center">
+                  <p className="text-[13px] text-surface-400">Belum ada truck</p>
+                  <p className="text-[11px] text-surface-300 mt-1">Klik tombol di atas untuk menambahkan truck baru</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </aside>
+
+        {/* Main - Form or Empty */}
+        <main className="flex-1 overflow-y-auto p-8 bg-surface-50">
+          {showForm ? (
+            <div className="max-w-xl mx-auto bg-white rounded-xl border border-surface-200 p-6 shadow-sm">
+              <div className="mb-6">
+                <h2 className="text-base font-bold text-surface-900">
+                  {editingTruck ? "Edit Truck" : "Truck Baru"}
+                </h2>
+                <p className="text-[12px] text-surface-500 mt-0.5">
+                  {editingTruck ? "Ubah detail truck yang sudah ada" : "Tambahkan truck baru ke sistem"}
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider block mb-1.5">
+                    Nama Truck
+                  </label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    placeholder="Contoh: Truck A"
+                    className="w-full text-sm px-4 py-2.5 border border-surface-300 rounded-lg outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-all"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider block mb-1.5">
+                      Plat Nomor
+                    </label>
+                    <input
+                      type="text"
+                      value={form.plate_number}
+                      onChange={(e) => setForm({ ...form, plate_number: e.target.value })}
+                      placeholder="L 1234 AB"
+                      className="w-full text-sm px-4 py-2.5 border border-surface-300 rounded-lg outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-all"
+                    />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-surface-800">{truck.name}</h4>
-                    <p className="text-[11px] text-surface-500">{truck.plat}</p>
+                    <label className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider block mb-1.5">
+                      Kapasitas (kg)
+                    </label>
+                    <input
+                      type="number"
+                      value={form.capacity_kg}
+                      onChange={(e) => setForm({ ...form, capacity_kg: e.target.value })}
+                      placeholder="5000"
+                      className="w-full text-sm px-4 py-2.5 border border-surface-300 rounded-lg outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-100 transition-all"
+                    />
                   </div>
                 </div>
+
+                <div>
+                  <label className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider block mb-2">
+                    Warna
+                  </label>
+                  <div className="flex gap-2 flex-wrap">
+                    {TRUCK_COLORS.map((c) => (
+                      <button
+                        key={c}
+                        onClick={() => setForm({ ...form, color: c })}
+                        className={`w-8 h-8 rounded-full border-2 transition-all ${form.color === c ? "border-surface-800 scale-110 shadow-md" : "border-transparent hover:scale-105"}`}
+                        style={{ background: c }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-semibold text-surface-500 uppercase tracking-wider block mb-2">
+                    Assign Area ({form.area_ids.length} area)
+                  </label>
+                  {areas.length === 0 ? (
+                    <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                      <p className="text-[12px] text-amber-700">
+                        Belum ada area. Buat area dulu di <Link href="/routes" className="underline font-medium">Area Mapping</Link>.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {areas.map((area) => {
+                        const selected = form.area_ids.includes(area.id);
+                        return (
+                          <button
+                            key={area.id}
+                            onClick={() => toggleArea(area.id)}
+                            className={`text-[12px] px-3 py-1.5 rounded-full border transition-all ${
+                              selected
+                                ? "border-primary-400 bg-primary-50 text-primary-700 shadow-sm"
+                                : "border-surface-300 text-surface-500 hover:border-surface-400 hover:bg-surface-50"
+                            }`}
+                          >
+                            <span className="inline-block w-2 h-2 rounded-full mr-1.5" style={{ background: area.color }} />
+                            {area.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6 pt-4 border-t border-surface-100">
                 <button
-                  onClick={() => deleteTruck(truck.id)}
-                  className="btn-ghost text-xs py-1 px-2 text-red-500 hover:bg-red-50"
+                  onClick={resetForm}
+                  className="flex-1 text-sm px-4 py-2.5 rounded-lg border border-surface-300 text-surface-600 hover:bg-surface-50 font-medium transition-colors"
                 >
-                  🗑
+                  Batal
+                </button>
+                <button
+                  onClick={saveTruck}
+                  disabled={saving || !form.name.trim()}
+                  className="flex-1 text-sm px-4 py-2.5 rounded-lg bg-primary-500 text-white hover:bg-primary-600 disabled:opacity-50 font-medium transition-colors flex items-center justify-center gap-2"
+                >
+                  {saving && <Spinner className="text-white" />}
+                  {saving ? "Menyimpan..." : editingTruck ? "Simpan Perubahan" : "Simpan Truck"}
                 </button>
               </div>
-
-              <div className="grid grid-cols-2 gap-2 mt-3">
-                <div className="bg-surface-50 rounded-lg p-2">
-                  <p className="text-[10px] text-surface-500">Kapasitas</p>
-                  <p className="text-sm font-semibold text-surface-800">{truck.capacity_kg.toLocaleString()} kg</p>
+            </div>
+          ) : (
+            <div className="h-full flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-surface-200 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                  <div className="w-8 h-8 border-2 border-surface-400 border-dashed rounded-lg" />
                 </div>
-                <div className="bg-surface-50 rounded-lg p-2">
-                  <p className="text-[10px] text-surface-500">Driver</p>
-                  <p className="text-sm font-semibold text-surface-800">{truck.driver || "-"}</p>
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <label className="text-[11px] text-surface-500 font-medium">Assign ke Area:</label>
-                <div className="flex items-center gap-2 mt-1">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ background: getAreaColor(truck.assignedArea) }}
-                  />
-                  <select
-                    value={truck.assignedArea || ""}
-                    onChange={(e) => assignArea(truck.id, e.target.value)}
-                    className="flex-1 text-sm px-2 py-1.5 border border-surface-300 rounded-lg outline-none focus:border-primary-400"
-                  >
-                    <option value="">Belum di-assign</option>
-                    {areas.map((a) => (
-                      <option key={a.id} value={a.id}>{a.name}</option>
-                    ))}
-                  </select>
-                </div>
+                <p className="text-sm font-medium text-surface-500">Klik "Tambah Truck" untuk mulai</p>
+                <p className="text-[12px] text-surface-400 mt-1">Atau pilih truck di sidebar untuk mengedit</p>
               </div>
             </div>
-          ))}
-        </div>
+          )}
+        </main>
       </div>
     </div>
   );

@@ -199,6 +199,82 @@ def main() -> int:
         print(json.dumps({"success": True}))
         return 0
 
+    if command == "get-trucks":
+        database_url = payload.get("database_url") or os.environ.get("DATABASE_URL")
+        sql = """SELECT id, name, plate_number, capacity_kg, color, area_ids FROM \"Truck\" ORDER BY created_at"""
+        import subprocess
+        proc = subprocess.run(
+            ["psql", database_url, "-At", "-F", "\t", "-c", sql],
+            capture_output=True, text=True, check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.strip())
+        trucks = []
+        for line in proc.stdout.splitlines():
+            if not line.strip(): continue
+            parts = line.split("\t")
+            if len(parts) >= 5:
+                trucks.append({
+                    "id": int(parts[0]),
+                    "name": parts[1],
+                    "plate_number": parts[2] if len(parts) > 2 else "",
+                    "capacity_kg": int(parts[3]) if parts[3] else 0,
+                    "color": parts[4] if len(parts) > 4 else "#1a73e8",
+                    "area_ids": json.loads(parts[5]) if len(parts) > 5 and parts[5] else [],
+                })
+        print(json.dumps({"trucks": trucks}))
+        return 0
+
+    if command == "save-truck":
+        database_url = payload.get("database_url") or os.environ.get("DATABASE_URL")
+        name = payload.get("name", "").replace("'", "''")
+        plate = payload.get("plate_number", "").replace("'", "''")
+        capacity = int(payload.get("capacity_kg", 0))
+        color = payload.get("color", "#1a73e8")
+        area_ids = json.dumps(payload.get("area_ids", []))
+        sql = f"""INSERT INTO \"Truck\" (name, plate_number, capacity_kg, color, area_ids) VALUES ('{name}', '{plate}', {capacity}, '{color}', '{area_ids}'::jsonb) RETURNING id"""
+        import subprocess
+        proc = subprocess.run(
+            ["psql", database_url, "-At", "-c", sql],
+            capture_output=True, text=True, check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.strip())
+        truck_id = proc.stdout.strip()
+        print(json.dumps({"success": True, "id": int(truck_id)}))
+        return 0
+
+    if command == "update-truck":
+        database_url = payload.get("database_url") or os.environ.get("DATABASE_URL")
+        truck_id = int(payload.get("id"))
+        name = payload.get("name", "").replace("'", "''")
+        plate = payload.get("plate_number", "").replace("'", "''")
+        capacity = int(payload.get("capacity_kg", 0))
+        color = payload.get("color", "#1a73e8")
+        area_ids = json.dumps(payload.get("area_ids", []))
+        sql = f"""UPDATE \"Truck\" SET name = '{name}', plate_number = '{plate}', capacity_kg = {capacity}, color = '{color}', area_ids = '{area_ids}'::jsonb WHERE id = {truck_id} RETURNING id"""
+        import subprocess
+        proc = subprocess.run(
+            ["psql", database_url, "-At", "-c", sql],
+            capture_output=True, text=True, check=False,
+        )
+        if proc.returncode != 0:
+            raise RuntimeError(proc.stderr.strip())
+        print(json.dumps({"success": True, "id": truck_id}))
+        return 0
+
+    if command == "delete-truck":
+        database_url = payload.get("database_url") or os.environ.get("DATABASE_URL")
+        truck_id = payload.get("id")
+        sql = f"""DELETE FROM \"Truck\" WHERE id = {int(truck_id)}"""
+        import subprocess
+        proc = subprocess.run(
+            ["psql", database_url, "-At", "-c", sql],
+            capture_output=True, text=True, check=False,
+        )
+        print(json.dumps({"success": True}))
+        return 0
+
     raise ValueError(f"unknown command: {command}")
 
 

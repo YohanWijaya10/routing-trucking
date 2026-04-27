@@ -1,0 +1,24 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e6]: 🚛
+        - generic [ref=e7]:
+          - heading "Truck Management" [level=1] [ref=e8]
+          - paragraph [ref=e9]: 0 truck
+      - generic [ref=e10]:
+        - link "🗺 Area Mapping" [ref=e11] [cursor=pointer]:
+          - /url: /routes
+        - generic [ref=e12]: ⏳
+    - generic [ref=e13]:
+      - complementary [ref=e14]:
+        - button "➕ Tambah Truck" [ref=e16] [cursor=pointer]
+        - generic [ref=e17]:
+          - heading "🚛 Daftar Truck (0)" [level=3] [ref=e19]
+          - paragraph [ref=e21]: Belum ada truck
+      - main [ref=e22]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: 🚛
+          - paragraph [ref=e26]: Klik "Tambah Truck" untuk mulai
+          - paragraph [ref=e27]: Atau pilih truck di sidebar untuk edit
+  - alert [ref=e28]
